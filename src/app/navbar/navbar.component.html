@@ -1,19 +1,19 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse">
           <span class="sr-only">Toggle Navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
       </button>
-      <a href="#" class="navbar-brand">生鲜派送</a>
+      <a class="navbar-brand" href="#">生鲜派送</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="detail.html">商品列表</a></li>
-        <li class="active"><a href="detail.html">购物车</a></li>
-        <li class="active"><a href="detail.html">我的订单</a></li>
+        <li routerLinkActive="active"><a routerLink="productlist">商品列表</a></li>
+        <li routerLinkActive="active"><a routerLink="cart">购物车</a></li>
+        <li routerLinkActive="active"><a routerLink="orderlist">我的订单</a></li>
       </ul>
     </div>
   </div>

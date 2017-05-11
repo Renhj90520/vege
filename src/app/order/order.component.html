@@ -1,3 +1,96 @@
-<p>
-  order works!
-</p>
+<div class="margin-all">
+  <div class="address-list">
+      <p>
+          <input id="add1" name="address" type="radio" checked><label for="add1">红旗南街XX小区1栋三单元</label><br> 张三 15510235652
+      </p>
+      <p>
+          <input name="address" type="radio">红旗南街XX小区1栋三单元<br> 张三 15510235652
+      </p>
+      <p>
+          <input name="address" type="radio">红旗南街XX小区1栋三单元<br> 张三 15510235652
+      </p>
+      <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal">新建地址</button>
+
+      <div class="modal fade" id="addaddress">
+          <div class="jumbotron">
+              <form>
+                  <div class="form-group">
+                      <label for="name">姓名</label>
+                      <input class="form-control" id="name" type="text">
+                  </div>
+                  <div class="form-group">
+                      <label for="phone">电话</label>
+                      <input class="form-control" id="phone" type="number">
+                  </div>
+                  <div class="form-group">
+                      <span>新疆省</span><span>昌吉市</span>
+                  </div>
+                  <div class="form-group">
+                      <label for="street">详细地址</label>
+                      <input class="form-control" id="street" type="textarea">
+                  </div>
+                  <button class="btn btn-primary" type="submit">添加</button>
+              </form>
+          </div>
+      </div>
+  </div>
+  <hr>
+  <div class="col-xs-12 paddingvertical">
+      <div class="pic">
+          <img src="http://placehold.it/100x100" alt>
+      </div>
+      <div class="info">
+          <p class="name">白菜</p>
+          <p class="name">￥15/Kg
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-minus"></i>
+                  </button>
+              <input class="form-control inline" type="number" min="0">
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  </button>
+          </p>
+          <p class="item-total">小计：￥45</p>
+      </div>
+  </div>
+  <div class="col-xs-12 paddingvertical">
+      <div class="pic">
+          <img src="http://placehold.it/100x100" alt>
+      </div>
+      <div class="info">
+          <p class="name">白菜</p>
+          <p class="name">￥15/Kg
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-minus"></i>
+                  </button>
+              <input class="form-control inline" type="number" min="0">
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  </button>
+          </p>
+          <p class="item-total">小计：￥45</p>
+      </div>
+  </div>
+  <div class="col-xs-12 paddingvertical">
+      <div class="pic">
+          <img src="http://placehold.it/100x100" alt>
+      </div>
+      <div class="info">
+          <p>白菜</p>
+          <p>￥15/Kg
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-minus"></i>
+                  </button>
+              <input class="form-control inline" type="number" min="0">
+              <button class="btn btn-primary btn-xs">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  </button>
+          </p>
+          <p class="item-total">小计：￥45</p>
+      </div>
+  </div>
+</div>
+<div class="operator row">
+    <div class="col-xs-8 total">总计：￥150</div>
+    <div class="col-xs-4 button" (click)="gotoOrders()">确认购买</div>
+</div>
