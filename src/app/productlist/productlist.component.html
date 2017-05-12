@@ -1,7 +1,19 @@
-<div> 
-  <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
+<div>
+    <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
 </div>
 <div class="row margin">
+    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1" *ngFor="let product of result?.body">
+        <div class="clear">
+            <div class="pic">
+                <img src="{{product.pictures[0].path}}" alt>
+            </div>
+            <div class="info">
+                <p class="font-middle gray bold">{{product.name}}</p>
+                <p class="font-small gray">{{product.description}}</p>
+                <p class="font-large">￥{{product.price}}/{{product.unitName}}</p>
+            </div>
+        </div>
+    </a>
     <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1">
         <div class="clear">
             <div class="pic">
@@ -9,18 +21,7 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
-                <p class="font-large">￥15/Kg</p>
-            </div>
-        </div>
-    </a><a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1">
-        <div class="clear">
-            <div class="pic">
-                <img src="http://placehold.it/100x100" alt>
-            </div>
-            <div class="info">
-                <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>
@@ -32,7 +33,7 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>
@@ -44,7 +45,7 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>
@@ -56,7 +57,7 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>
@@ -68,7 +69,7 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>
@@ -80,7 +81,31 @@
             </div>
             <div class="info">
                 <p class="font-middle gray bold">白菜</p>
-                <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-large">￥15/Kg</p>
+            </div>
+        </div>
+    </a>
+    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1">
+        <div class="clear">
+            <div class="pic">
+                <img src="http://placehold.it/100x100" alt>
+            </div>
+            <div class="info">
+                <p class="font-middle gray bold">白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
+                <p class="font-large">￥15/Kg</p>
+            </div>
+        </div>
+    </a>
+    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1">
+        <div class="clear">
+            <div class="pic">
+                <img src="http://placehold.it/100x100" alt>
+            </div>
+            <div class="info">
+                <p class="font-middle gray bold">白菜</p>
+                <p class="font-small gray">白菜白菜白菜白菜白菜白菜</p>
                 <p class="font-large">￥15/Kg</p>
             </div>
         </div>

@@ -7,3 +7,13 @@
 .item-info{
     margin-left: 105px;
 }
+.cart-empty>p,.recommandation > p{
+    text-align: center;
+}
+.recommandation p{
+    margin-bottom: 0px;
+}
+
+.row{
+    margin: 0;
+}
