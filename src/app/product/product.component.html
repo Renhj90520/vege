@@ -7,13 +7,13 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="http://placehold.it/300x260" width="100%" class="image-responsive" alt="pic">
+                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
             </div>
             <div class="item">
-                <img src="http://placehold.it/300x260" width="100%" class="image-responsive" alt="pic">
+                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
             </div>
             <div class="item">
-                <img src="http://placehold.it/300x260" width="100%" class="image-responsive" alt="pic">
+                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
             </div>
         </div>
         <a class="left carousel-control" data-slide="prev" href="#pictures" role="button">
@@ -26,16 +26,16 @@
         </a>
     </div>
     <div class="infodetail margin-all">
-        <p class="font-middle gray bold">白菜</p>
-        <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜白菜白菜白菜白菜</p>
-        <p class="font-large">￥15/Kg</p>
+        <p class="font-middle gray bold">{{result?.body[0].name}}</p>
+        <p class="font-small gray">{{result?.body[0].description}}</p>
+        <p class="font-large">￥{{result?.body[0].price}}/{{result?.body[0].unitName}}</p>
         <div>
-            <button class="btn btn-primary btn-xs">
+            <button class="btn btn-primary btn-xs" (click)="onDecrease()">
                 <i class="glyphicon glyphicon-minus">
                 </i>
             </button>
-            <input class="form-control inline" type="number" min="1">
-            <button class="btn btn-primary btn-xs">
+            <input class="form-control inline" type="number" min="1" [(value)]="count">
+            <button class="btn btn-primary btn-xs" (click)="onIncrease()">
             <i class="glyphicon glyphicon-plus"></i>
             </button>
         </div>

@@ -11,6 +11,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderlistComponent } from './orderlist/orderlist.component';
 import { OrderComponent } from './order/order.component';
 import { ProductComponent } from './product/product.component';
+import { OrderStatePipe } from './shared/orderstate.pipe';
 
 @NgModule({
   declarations: [

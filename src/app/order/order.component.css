@@ -6,3 +6,9 @@
     font-size: 16px;
     color: red;
 }
+
+.error-label{
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}

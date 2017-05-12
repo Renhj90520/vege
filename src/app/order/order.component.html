@@ -1,7 +1,7 @@
 <div class="margin-all">
     <div class="address-list">
-        <p>
-            <input id="add1" name="address" type="radio" checked><label for="add1">红旗南街XX小区1栋三单元</label><br> 张三 15510235652
+        <p *ngFor="let address of addresses; let i=index">
+            <input id="add1" name="address" type="radio" checked><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
         </p>
         <p>
             <input name="address" type="radio">红旗南街XX小区1栋三单元<br> 张三 15510235652
@@ -13,46 +13,48 @@
 
         <div class="modal fade" id="addaddress">
             <div class="jumbotron">
-                <form>
+                <form method="post" #addrForm="ngForm">
                     <div class="form-group">
-                        <label for="name">姓名</label>
-                        <input class="form-control" id="name" type="text">
+                        <label for="username">姓名</label>
+                        <input class="form-control" id="username" name="username" type="text" required #name="ngModel" [(ngModel)]="newAddr.name">
+                        <p class="error-label" *ngIf="name.touched&&!name.valid">姓名不能为空</p>
                     </div>
                     <div class="form-group">
-                        <label for="phone">电话</label>
-                        <input class="form-control" id="phone" type="number">
+                        <label for="userphone">电话</label>
+                        <input class="form-control" id="userphone" name="userphone" type="number" required #phone="ngModel" [(ngModel)]="newAddr.phone">
+                        <p class="error-label" *ngIf="phone.touched&&!phone.valid">电话不能为空</p>
                     </div>
                     <div class="form-group">
                         <span>新疆省</span><span>昌吉市</span>
                     </div>
                     <div class="form-group">
-                        <label for="street">详细地址</label>
-                        <input class="form-control" id="street" type="textarea">
+                        <label for="userstreet">详细地址</label>
+                        <input class="form-control" id="userstreet" name="userstreet" type="textarea" required #street="ngModel" [(ngModel)]="newAddr.street">
+                        <p class="error-label" *ngIf="street.touched&&!street.valid">详细地址不能为空</p>
                     </div>
-                    <button class="btn btn-primary" type="submit">添加</button>
+                    <button class="btn btn-primary" type="submit" (click)="onAddAddress()" [disabled]="!addrForm.valid">添加</button>
                 </form>
             </div>
         </div>
     </div>
     <hr>
     <div class="row">
-
-        <div class="col-xs-12 paddingvertical">
+        <div class="col-xs-12 paddingvertical" *ngFor="let product of products"> 
             <div class="pic">
                 <img src="http://placehold.it/100x100" alt>
             </div>
             <div class="info">
-                <p class="name">白菜</p>
-                <p class="name">￥15/Kg
+                <p class="name">{{product.name}}</p>
+                <p class="name">￥{{product.price}}/{{product.unitName}}
                     <button class="btn btn-primary btn-xs">
                   <i class="glyphicon glyphicon-minus"></i>
                   </button>
-                    <input class="form-control inline" type="number" min="0">
+                    <input class="form-control inline" type="number" [(value)]="product.count" min="0">
                     <button class="btn btn-primary btn-xs">
                   <i class="glyphicon glyphicon-plus"></i>
                   </button>
                 </p>
-                <p class="item-total">小计：￥45</p>
+                <p class="item-total">小计：￥{{product.count * product.price}}</p>
             </div>
         </div>
         <div class="col-xs-12 paddingvertical">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { ProductService } from './product.service';
 import { Result } from '../shared/result';
 import { CartService } from '../cart/cart.service';
@@ -22,14 +22,20 @@ export class ProductComponent implements OnInit {
   productInCart: any[] = [];
   count: number = 1;
   ngOnInit() {
-    let id = this.route.params['id'];
-    this.productService.getAllProduct(id)
-      .subscribe(res => {
-        this.result = res;
-      });
+    this.route.params.forEach((params: Params) => {
+      let id = +params['id'];
+      console.log('--------->id is ' + id);
+      this.productService.getAllProduct(id)
+        .subscribe(res => {
+          this.result = res;
+        });
+    })
+
     this.cartService.getAllInCart()
       .subscribe(pro => {
         this.productInCart = pro.body;
+        console.log('--------ProductInCart' + JSON
+          .stringify(this.productInCart));
       });
   }
 
@@ -38,11 +44,22 @@ export class ProductComponent implements OnInit {
   }
   onAddCart() {
     let product = new Product(this.result.body.id, this.count);
+    console.log(JSON.stringify(product));
     this.cartService.addToCart(product)
       .subscribe(res => {
         if (res.state == 1) {
           this.productInCart.push(product);
         }
       });
+  }
+  onIncrease() {
+    this.count++;
+  }
+
+  onDecrease() {
+    this.count--;
+    if (this.count < 1) {
+      this.count = 1;
+    }
   }
 }

@@ -1,4 +1,4 @@
-<div class="cart-empty margin-all">
+<div class="cart-empty margin-all" *ngIf="products!=null&&products.length==0">
     <p><i class="glyphicon glyphicon-shopping-cart"></i>购物车是空的</p>
     <hr>
     <div class="recommandation">
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<div class="cart-info margin-all">
+<div class="cart-info margin-all" *ngFor="let product of products">
     <h5>选购的商品</h5>
     <hr>
     <div class="cart-list">
@@ -65,14 +65,14 @@
                 <img src="http://placehold.it/100x100" alt>
             </div>
             <div class="item-info">
-                <p class="font-large">白菜</p>
-                <p>￥15/Kg</p>
+                <p class="font-large">{{product.name}}</p>
+                <p>￥{{product.price}}/{{product.unitName}}</p>
                 <p>
-                    <button class="btn btn-primary btn-xs">
+                    <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                         <i class="glyphicon glyphicon-minus"></i>
                         </button>
-                    <input class="form-control inline" type="number" min="0">
-                    <button class="btn btn-primary btn-xs">
+                    <input class="form-control inline" type="number" [(value)]="product.count" min="0">
+                    <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
                         <i class="glyphicon glyphicon-plus"></i>
                         </button>
                 </p>

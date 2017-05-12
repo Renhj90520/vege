@@ -2,12 +2,12 @@
   <p class="center"><i class="glyphicon glyphicon-list-alt"></i>我的订单</p>
   <hr>
   <div class="order-list">
-    <div class="order-item">
-      <p><span>20170511000002</span> <span class="right">完成交易</span></p>
-      <a href="productlist/1" class="col-xs-12 paddingvertical">
+    <div class="order-item" *ngFor="let order of orders">
+      <p><span>{{order.id}}</span> <span class="right">完成交易</span></p>
+      <a class="col-xs-12 paddingvertical" href="productlist/1">
         <div class="clear">
           <div class="pic">
-            <img src="http://placehold.it/100x100" alt="">
+            <img src="http://placehold.it/100x100" alt>
           </div>
           <div class="info">
             <p class="font-middle gray">白菜</p>
@@ -16,10 +16,10 @@
           </div>
         </div>
       </a>
-      <a href="productlist/1" class="col-xs-12 paddingvertical">
+      <a class="col-xs-12 paddingvertical" href="productlist/1">
         <div class="clear">
           <div class="pic">
-            <img src="http://placehold.it/100x100" alt="">
+            <img src="http://placehold.it/100x100" alt>
           </div>
           <div class="info">
             <p class="font-middle gray">白菜</p>
@@ -30,14 +30,14 @@
       </a>
       <p>共2件商品 合计￥100</p>
       <p></p>
+      <hr>
     </div>
-    <hr>
     <div class="order-item">
       <p><span>20170511000002</span> <span>交易取消</span></p>
-      <a href="detail.html" class="col-xs-12 paddingvertical">
+      <a class="col-xs-12 paddingvertical" href="detail.html">
         <div class="clear">
           <div class="pic">
-            <img src="http://placehold.it/100x100" alt="">
+            <img src="http://placehold.it/100x100" alt>
           </div>
           <div class="info">
             <p class="name">白菜</p>
@@ -46,10 +46,10 @@
           </div>
         </div>
       </a>
-      <a href="detail.html" class="col-xs-12 paddingvertical">
+      <a class="col-xs-12 paddingvertical" href="detail.html">
         <div class="clear">
           <div class="pic">
-            <img src="http://placehold.it/100x100" alt="">
+            <img src="http://placehold.it/100x100" alt>
           </div>
           <div class="info">
             <p class="name">白菜</p>

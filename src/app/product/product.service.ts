@@ -7,7 +7,7 @@ import { baseUrl } from '../shared/settings';
 export class ProductService {
     constructor(private http: Http) { }
 
-    getAllProduct(id?: string) {
+    getAllProduct(id?: number) {
         return this.http.get(baseUrl + "products/" + id)
             .map(res => res.json());
     }
