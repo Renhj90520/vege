@@ -4,15 +4,15 @@
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
       <p><span>{{order.id}}</span> <span class="right">完成交易</span></p>
-      <a class="col-xs-12 paddingvertical" href="productlist/1">
+      <a class="col-xs-12 paddingvertical" href="products/{{product.id}}" *ngFor="let product of order">
         <div class="clear">
           <div class="pic">
-            <img src="http://placehold.it/100x100" alt>
+            <img src="{{product.pictures[0].path}}" alt>
           </div>
           <div class="info">
-            <p class="font-middle gray">白菜</p>
-            <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
-            <p class="font-large bold">￥15/Kg</p>
+            <p class="font-middle gray">{{product.name}}</p>
+            <p class="font-small gray">{{product.description}}</p>
+            <p class="font-large bold">￥{{product.price}}/{{product.unitName}}</p>
           </div>
         </div>
       </a>
