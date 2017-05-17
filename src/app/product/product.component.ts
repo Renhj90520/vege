@@ -44,6 +44,7 @@ export class ProductComponent implements OnInit {
   }
   onAddCart() {
     let product = new Product(this.result.body.id, this.count);
+    console.log('-------------->add product to cart')
     console.log(JSON.stringify(product));
     this.cartService.addToCart(product)
       .subscribe(res => {
