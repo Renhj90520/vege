@@ -2,7 +2,7 @@
     <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
 </div>
 <div class="row margin">
-    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1" *ngFor="let product of result?.body">
+    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1" *ngFor="let product of result?.body.items">
         <div class="clear">
             <div class="pic">
                 <img src="{{product.pictures[0].path}}" alt>
