@@ -1,8 +1,8 @@
 export class Product {
-    constructor(id: any, count: number) {
-        this.id = id;
+    constructor(productid: any, count: number) {
+        this.productid = productid;
         this.count = count;
     }
-    id: number;
+    productid: number;
     count: number;
 }

@@ -1,13 +1,7 @@
 <div class="margin-all">
     <div class="address-list">
         <p *ngFor="let address of addresses; let i=index">
-            <input id="add1" name="address" type="radio" checked><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
-        </p>
-        <p>
-            <input name="address" type="radio">红旗南街XX小区1栋三单元<br> 张三 15510235652
-        </p>
-        <p>
-            <input name="address" type="radio">红旗南街XX小区1栋三单元<br> 张三 15510235652
+            <input id="add{{i}}" name="address" type="radio" checked><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
         </p>
         <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal">新建地址</button>
 
@@ -32,7 +26,7 @@
                         <input class="form-control" id="userstreet" name="userstreet" type="textarea" required #street="ngModel" [(ngModel)]="newAddr.street">
                         <p class="error-label" *ngIf="street.touched&&!street.valid">详细地址不能为空</p>
                     </div>
-                    <button class="btn btn-primary" type="submit" (click)="onAddAddress()" [disabled]="!addrForm.valid">添加</button>
+                    <button class="btn btn-primary" type="submit" (click)="onAddAddress()" data-target="#addaddress" data-toggle="modal" [disabled]="!addrForm.valid">添加</button>
                 </form>
             </div>
         </div>

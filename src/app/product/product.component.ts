@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService) { }
 
-  result: any;
+  product;
   productInCart: any[] = [];
   count: number = 1;
   ngOnInit() {
@@ -27,13 +27,14 @@ export class ProductComponent implements OnInit {
       console.log('--------->id is ' + id);
       this.productService.getAllProduct(id)
         .subscribe(res => {
-          this.result = res;
+          console.log('---------->res.body:' + JSON.stringify(res.body));
+          this.product = res.body.items[0];
         });
     })
 
     this.cartService.getAllInCart()
       .subscribe(pro => {
-        this.productInCart = pro.body;
+        this.productInCart = pro.body || [];
         console.log('--------ProductInCart' + JSON
           .stringify(this.productInCart));
       });
@@ -43,13 +44,14 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['cart'], { replaceUrl: true });
   }
   onAddCart() {
-    let product = new Product(this.result.body.id, this.count);
+    let product = new Product(this.product.id, this.count);
     console.log('-------------->add product to cart')
     console.log(JSON.stringify(product));
     this.cartService.addToCart(product)
       .subscribe(res => {
         if (res.state == 1) {
-          this.productInCart.push(product);
+          if (!this.productInCart.some(p => p.productid == product.productid))
+            this.productInCart.push(product);
         }
       });
   }

@@ -6,3 +6,6 @@
 .badge-importabt{
     background-color: #f12f30;
 }
+#pictures{
+    min-height: 260px; 
+}

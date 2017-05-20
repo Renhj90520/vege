@@ -1,19 +1,11 @@
 <div class="container">
     <div class="carousel slide" id="pictures" date-ride="carousel">
         <ol class="carousel-indicators">
-            <li class="active" data-slide-to="0" data-target="#pictures"></li>
-            <li data-slide-to="0" data-target="#pictures"></li>
-            <li data-slide-to="0" data-target="#pictures"></li>
+            <li data-slide-to="i" *ngFor="let picture of product?.pictures;let i=index"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
-            </div>
-            <div class="item">
-                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
-            </div>
-            <div class="item">
-                <img class="image-responsive" src="http://placehold.it/300x260" alt="pic" width="100%">
+            <div class="item" *ngFor="let picture of product?.pictures">
+                <img src="{{picture.path}}" alt="pic" class="image-responsive" width="100%">
             </div>
         </div>
         <a class="left carousel-control" data-slide="prev" href="#pictures" role="button">
@@ -26,9 +18,9 @@
         </a>
     </div>
     <div class="infodetail margin-all">
-        <p class="font-middle gray bold">{{result?.body[0].name}}</p>
-        <p class="font-small gray">{{result?.body[0].description}}</p>
-        <p class="font-large">￥{{result?.body[0].price}}/{{result?.body[0].unitName}}</p>
+        <p class="font-middle gray bold">{{product?.name}}</p>
+        <p class="font-small gray">{{product?.description}}</p>
+        <p class="font-large">￥{{product?.price}}/{{product?.unitName}}</p>
         <div>
             <button class="btn btn-primary btn-xs" (click)="onDecrease()">
                 <i class="glyphicon glyphicon-minus">

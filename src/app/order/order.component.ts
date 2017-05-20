@@ -36,10 +36,10 @@ export class OrderComponent implements OnInit {
       });
   }
   gotoOrders() {
-    let address = this.addresses.filter(a => a.ischecked)[0];
-    if (address) {
-      address.products = this.products;
-      this.orderService.addOrder(address)
+    let address = this.addresses.filter(a => a.ischecked);
+    if (address && address.length > 0) {
+      address[0].products = this.products;
+      this.orderService.addOrder(address[0])
         .subscribe(res => {
           this.router.navigate(['orderlist'], { replaceUrl: true });
         }, err => {
@@ -55,6 +55,10 @@ export class OrderComponent implements OnInit {
 
   onAddAddress() {
     this.addressService.addNewAddress(this.newAddr)
-      .subscribe();
+      .subscribe(res=>{
+        if(res.state==1&&res.body){
+          this.addresses.push(res.body);
+        }
+      });
   }
 }
