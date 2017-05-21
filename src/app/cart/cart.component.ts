@@ -24,7 +24,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.cartService.getAllInCart().subscribe(res => {
-      console.log('-------------->cart ' + JSON.stringify(res));
       this.message = res.message;
       this.state = res.state;
       this.products = res.body || [];
@@ -40,6 +39,7 @@ export class CartComponent implements OnInit {
   }
 
   gotoOrder() {
+    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
     this.router.navigate(['order'], { replaceUrl: true });
   }
 

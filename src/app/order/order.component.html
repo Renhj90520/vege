@@ -1,7 +1,7 @@
 <div class="margin-all">
     <div class="address-list">
         <p *ngFor="let address of addresses; let i=index">
-            <input id="add{{i}}" name="address" type="radio" checked><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
+            <input id="add{{i}}" name="address" type="radio" [(checked)]="address.ischecked" (change)="onAddressChange(address)"><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
         </p>
         <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal">新建地址</button>
 
@@ -26,7 +26,7 @@
                         <input class="form-control" id="userstreet" name="userstreet" type="textarea" required #street="ngModel" [(ngModel)]="newAddr.street">
                         <p class="error-label" *ngIf="street.touched&&!street.valid">详细地址不能为空</p>
                     </div>
-                    <button class="btn btn-primary" type="submit" (click)="onAddAddress()" data-target="#addaddress" data-toggle="modal" [disabled]="!addrForm.valid">添加</button>
+                    <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal" type="submit" (click)="onAddAddress()" [disabled]="!addrForm.valid">添加</button>
                 </form>
             </div>
         </div>
@@ -35,61 +35,25 @@
     <div class="row">
         <div class="col-xs-12 paddingvertical" *ngFor="let product of products"> 
             <div class="pic">
-                <img src="http://placehold.it/100x100" alt>
+                <img src="{{product.pictures[0].path}}" alt>
             </div>
             <div class="info">
                 <p class="name">{{product.name}}</p>
                 <p class="name">￥{{product.price}}/{{product.unitName}}
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-minus"></i>
-                  </button>
+                    <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
+                        <i class="glyphicon glyphicon-minus"></i>
+                    </button>
                     <input class="form-control inline" type="number" [(value)]="product.count" min="0">
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-plus"></i>
-                  </button>
+                    <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
                 </p>
                 <p class="item-total">小计：￥{{product.count * product.price}}</p>
-            </div>
-        </div>
-        <div class="col-xs-12 paddingvertical">
-            <div class="pic">
-                <img src="http://placehold.it/100x100" alt>
-            </div>
-            <div class="info">
-                <p class="name">白菜</p>
-                <p class="name">￥15/Kg
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-minus"></i>
-                  </button>
-                    <input class="form-control inline" type="number" min="0">
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-plus"></i>
-                  </button>
-                </p>
-                <p class="item-total">小计：￥45</p>
-            </div>
-        </div>
-        <div class="col-xs-12 paddingvertical">
-            <div class="pic">
-                <img src="http://placehold.it/100x100" alt>
-            </div>
-            <div class="info">
-                <p>白菜</p>
-                <p>￥15/Kg
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-minus"></i>
-                  </button>
-                    <input class="form-control inline" type="number" min="0">
-                    <button class="btn btn-primary btn-xs">
-                  <i class="glyphicon glyphicon-plus"></i>
-                  </button>
-                </p>
-                <p class="item-total">小计：￥45</p>
             </div>
         </div>
     </div>
 </div>
 <div class="operator row">
-    <div class="col-xs-8 total">总计：￥150</div>
+    <div class="col-xs-8 total">总计：￥{{totalCost}}</div>
     <div class="col-xs-4 button" (click)="gotoOrders()">确认购买</div>
 </div>

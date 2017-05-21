@@ -9,12 +9,12 @@ export class OrderService {
 
     constructor(private http: Http) { }
 
-    addOrder(address: Address, openId?: string) {
+    addOrder(order: any, openId?: string) {
         let url = baseUrl + "orders/";
         if (openId) {
             url + openId;
         }
-        return this.http.post(url, address)
+        return this.http.post(url, order)
             .map(res => res.json());
     }
 

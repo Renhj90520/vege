@@ -19,8 +19,9 @@ export class OrderComponent implements OnInit {
     private addressService: AddressService,
     private cartService: CartService) { }
   addresses: Address[] = [];
-  products: Product[];
+  products: any[];
   newAddr: Address = new Address();
+  totalCost: number = 0;
   ngOnInit() {
     this.addressService.getAllAddress()
       .subscribe(res => {
@@ -30,21 +31,28 @@ export class OrderComponent implements OnInit {
         }
       });
 
-    this.cartService.getAllInCart()
-      .subscribe(res => {
-        this.products = res.body;
-      });
+    // this.cartService.getAllInCart()
+    //   .subscribe(res => {
+    //     this.products = res.body;
+    //   });
+    this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
+    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
   }
   gotoOrders() {
     let address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
-      address[0].products = this.products;
-      this.orderService.addOrder(address[0])
+      let order = {
+        createtime: this.getNow(),
+        state: 0, addressId: address[0].id, products: this.products.map(p => {
+          return { productid: p.id, count: p.count, price: p.price }
+        })
+      };
+      this.orderService.addOrder(order, 'openid')
         .subscribe(res => {
           this.router.navigate(['orderlist'], { replaceUrl: true });
         }, err => {
           if (err) {
-            alert(err.message);
+            alert(err);
           }
         })
     } else {
@@ -52,13 +60,40 @@ export class OrderComponent implements OnInit {
     }
 
   }
-
+  getNow() {
+    let now = new Date();
+    let month = now.getMonth() < 10 ? '0' + now.getMonth() : now.getMonth();
+    let day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+    let hour = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
+    let minute = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
+    let seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds();
+    return `${now.getFullYear()}\-${month}\-${day} ${hour}:${minute}:${seconds}`;
+  }
   onAddAddress() {
     this.addressService.addNewAddress(this.newAddr)
-      .subscribe(res=>{
-        if(res.state==1&&res.body){
+      .subscribe(res => {
+        if (res.state == 1 && res.body) {
+          this.addresses.forEach(a => a.ischecked = false);
+          res.body.ischecked = true;
           this.addresses.push(res.body);
         }
       });
+  }
+  onIncrease(product) {
+    product.count++;
+    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+  }
+
+  onDecrease(product) {
+    product.count--;
+    if (product.count < 0) {
+      product.count = 0;
+    }
+    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+  }
+
+  onAddressChange(address) {
+    this.addresses.forEach(a => a.ischecked = false);
+    address.ischecked = true;
   }
 }

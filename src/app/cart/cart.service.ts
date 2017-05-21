@@ -8,13 +8,13 @@ import 'rxjs/add/operator/map'
 export class CartService {
     constructor(private http: Http) { }
 
+    products: any[];
+
     addToCart(product: Product, openId?: string) {
         let url = baseUrl + "carts/";
         if (openId) {
             url + openId;
         }
-        let headers: Headers = new Headers();
-        headers.set("Content-Type", "application/json");
         return this.http.post(url, product)
             .map(res => res.json());
     }

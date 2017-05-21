@@ -24,10 +24,8 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];
-      console.log('--------->id is ' + id);
       this.productService.getAllProduct(id)
         .subscribe(res => {
-          console.log('---------->res.body:' + JSON.stringify(res.body));
           this.product = res.body.items[0];
         });
     })
@@ -35,8 +33,6 @@ export class ProductComponent implements OnInit {
     this.cartService.getAllInCart()
       .subscribe(pro => {
         this.productInCart = pro.body || [];
-        console.log('--------ProductInCart' + JSON
-          .stringify(this.productInCart));
       });
   }
 
@@ -45,8 +41,6 @@ export class ProductComponent implements OnInit {
   }
   onAddCart() {
     let product = new Product(this.product.id, this.count);
-    console.log('-------------->add product to cart')
-    console.log(JSON.stringify(product));
     this.cartService.addToCart(product)
       .subscribe(res => {
         if (res.state == 1) {

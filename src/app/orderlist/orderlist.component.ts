@@ -15,7 +15,10 @@ export class OrderlistComponent implements OnInit {
   ngOnInit() {
     this.orderService.getAllOrders()
       .subscribe(res => {
-        this.orders = res.body;
+        this.orders = res.body.items;
+        this.orders.forEach(order => {
+          order.total = order.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+        });
       });
   }
 

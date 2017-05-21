@@ -3,63 +3,22 @@
   <hr>
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
-      <p><span>{{order.id}}</span> <span class="right">完成交易</span></p>
-      <a class="col-xs-12 paddingvertical" href="products/{{product.id}}" *ngFor="let product of order">
+      <p><span>{{order.id}}</span> <span class="right">{{order.state|OrderStatePipe}}</span></p>
+      <a class="col-xs-12 paddingvertical" href="products/{{product.id}}" *ngFor="let product of order.products">
         <div class="clear">
           <div class="pic">
             <img src="{{product.pictures[0].path}}" alt>
           </div>
           <div class="info">
             <p class="font-middle gray">{{product.name}}</p>
-            <p class="font-small gray">{{product.description}}</p>
+            <p class="font-middle gray">数量：{{product.count}}</p>
             <p class="font-large bold">￥{{product.price}}/{{product.unitName}}</p>
           </div>
         </div>
       </a>
-      <a class="col-xs-12 paddingvertical" href="productlist/1">
-        <div class="clear">
-          <div class="pic">
-            <img src="http://placehold.it/100x100" alt>
-          </div>
-          <div class="info">
-            <p class="font-middle gray">白菜</p>
-            <p class="font-small gray">白菜白菜白菜白菜白菜白菜白菜白菜</p>
-            <p class="font-large bold">￥15/Kg</p>
-          </div>
-        </div>
-      </a>
-      <p>共2件商品 合计￥100</p>
+      <p>共{{order.products.length}}件商品 合计￥{{order.total}}</p>
       <p></p>
       <hr>
-    </div>
-    <div class="order-item">
-      <p><span>20170511000002</span> <span>交易取消</span></p>
-      <a class="col-xs-12 paddingvertical" href="detail.html">
-        <div class="clear">
-          <div class="pic">
-            <img src="http://placehold.it/100x100" alt>
-          </div>
-          <div class="info">
-            <p class="name">白菜</p>
-            <p class="desc">白菜白菜白菜白菜白菜白菜白菜白菜</p>
-            <p class="price">￥15/Kg</p>
-          </div>
-        </div>
-      </a>
-      <a class="col-xs-12 paddingvertical" href="detail.html">
-        <div class="clear">
-          <div class="pic">
-            <img src="http://placehold.it/100x100" alt>
-          </div>
-          <div class="info">
-            <p class="name">白菜</p>
-            <p class="desc">白菜白菜白菜白菜白菜白菜白菜白菜</p>
-            <p class="price">￥15/Kg</p>
-          </div>
-        </div>
-      </a>
-      <p>共1件商品 合计￥100</p>
-      <p>订单取消原因：超出配送范围</p>
     </div>
   </div>
 </div>
