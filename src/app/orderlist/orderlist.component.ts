@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../order/order.service';
-import { OrderStatePipe } from '../shared/orderstate.pipe';
 
 @Component({
   selector: 'app-orderlist',

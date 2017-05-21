@@ -21,7 +21,8 @@ import { OrderStatePipe } from './shared/orderstate.pipe';
     CartComponent,
     OrderlistComponent,
     OrderComponent,
-    ProductComponent
+    ProductComponent,
+    OrderStatePipe
   ],
   imports: [
     BrowserModule,

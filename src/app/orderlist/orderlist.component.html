@@ -3,7 +3,7 @@
   <hr>
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
-      <p><span>{{order.id}}</span> <span class="right">{{order.state|OrderStatePipe}}</span></p>
+      <p><span>{{order.id}}</span> <span class="right">{{order.state|orderstate}}</span></p>
       <a class="col-xs-12 paddingvertical" href="products/{{product.id}}" *ngFor="let product of order.products">
         <div class="clear">
           <div class="pic">
