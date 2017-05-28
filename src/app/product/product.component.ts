@@ -26,7 +26,13 @@ export class ProductComponent implements OnInit {
       let id = +params['id'];
       this.productService.getAllProduct(id)
         .subscribe(res => {
-          this.product = res.body.items[0];
+          if (res.state == 1) {
+            this.product = res.body.items[0];
+          } else {
+            alert(res.message);
+          }
+        }, err => {
+          alert(err);
         });
     })
 

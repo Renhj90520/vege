@@ -1,11 +1,11 @@
-<div class="cart-empty margin-all" *ngIf="products!=null&&products.length==0">
+<div class="cart-empty padding-all" *ngIf="products!=null&&products.length==0">
     <p><i class="glyphicon glyphicon-shopping-cart"></i>购物车是空的</p>
     <hr>
     <div class="recommandation">
         <p>为你推荐</p>
         <div class="row">
-            <a class="col-xs-6 paddinghorizontal" *ngFor="let suggestion of suggestions" href="productlist/{{suggestion.id}}">
-                <img src="{{suggestion.pictures[0].path}}" alt>
+            <a class="col-xs-6 paddinghorizontal" routerLink="productlist/{{suggestion.id}}" *ngFor="let suggestion of suggestions">
+                <img class="productimg img-responsive" src="{{suggestion.pictures[0].path}}" alt>
                 <p class="font-middle gray">{{suggestion.name}}</p>
                 <p class="font-small gray">{{suggestion.description}}</p>
                 <p class="font-large bold">￥{{suggestion.price}}/{{suggestion.unitName}}</p>
@@ -14,13 +14,13 @@
     </div>
 </div>
 
-<div class="cart-info margin-all" *ngFor="let product of products">
+<div class="cart-info padding-all" *ngFor="let product of products">
     <h5>选购的商品</h5>
     <hr>
     <div class="cart-list">
         <div class="cart-item">
             <div class="float-left">
-                <img src="{{product.pictures[0].path}}" alt>
+                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
             </div>
             <div class="item-info">
                 <p class="font-large">{{product.name}}</p>

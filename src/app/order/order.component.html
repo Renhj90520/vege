@@ -1,7 +1,8 @@
-<div class="margin-all">
+<div class="padding-all">
     <div class="address-list">
         <p *ngFor="let address of addresses; let i=index">
-            <input id="add{{i}}" name="address" type="radio" [(checked)]="address.ischecked" (change)="onAddressChange(address)"><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}
+            <span><input id="add{{i}}" name="address" type="radio" [(checked)]="address.ischecked" (change)="onAddressChange(address)"><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}</span>
+            <span class="right"><i class="glyphicon glyphicon-remove" (click)="onAddrRemove(address)" role="button"></i></span>
         </p>
         <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal">新建地址</button>
 
@@ -35,7 +36,7 @@
     <div class="row">
         <div class="col-xs-12 paddingvertical" *ngFor="let product of products"> 
             <div class="pic">
-                <img src="{{product.pictures[0].path}}" alt>
+                <img src="{{product.pictures[0].path}}" class="productimg img-responsive" alt>
             </div>
             <div class="info">
                 <p class="name">{{product.name}}</p>

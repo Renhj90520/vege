@@ -18,7 +18,6 @@ export class ProductlistComponent implements OnInit {
       .subscribe(res => {
         if (res.body.length > 0) {
           this.categories = res.body;
-          console.log(JSON.stringify(this.categories))
           this.productService.getAllProduct(null, null, null, this.categories[0])
             .subscribe(res => {
               this.result = res;
@@ -30,7 +29,14 @@ export class ProductlistComponent implements OnInit {
   onCategoryClick(categoryid) {
     this.productService.getAllProduct(null, null, null, categoryid)
       .subscribe(res => {
-        this.result = res;
-      })
+        if (res.state == 1) {
+          this.result = res;
+        }
+        else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
   }
 }

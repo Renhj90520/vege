@@ -27,4 +27,10 @@ export class AddressService {
         return this.http.post(url, address)
             .map(res => res.json());
     }
+
+    deleteAddress(id: number) {
+        let url = baseUrl + 'addresses/' + id;
+        return this.http.delete(url)
+            .map(res => res.json());
+    }
 }

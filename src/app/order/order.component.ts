@@ -96,4 +96,19 @@ export class OrderComponent implements OnInit {
     this.addresses.forEach(a => a.ischecked = false);
     address.ischecked = true;
   }
+
+  onAddrRemove(addr) {
+    if (confirm('确认删除该地址吗？')) {
+      this.addressService.deleteAddress(addr.id)
+        .subscribe(res => {
+          if (res.state == 1) {
+            this.addresses.splice(this.addresses.indexOf(addr), 1);
+          } else {
+            alert(res.message);
+          }
+        }, err => {
+          alert(err);
+        });
+    }
+  }
 }

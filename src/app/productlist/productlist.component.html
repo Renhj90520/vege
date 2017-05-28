@@ -1,7 +1,7 @@
 <div>
     <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
 </div>
-<div class="categories row">
+<div class="row">
     <div class="col-sm-3" *ngFor="let category of categories">
         <img src="{{category.iconPath}}" class="categories" alt="icon" role="button" (click)="onCategoryClick(category.id)">
         <p>{{category.name}}</p>
@@ -9,14 +9,14 @@
     </div>
 </div>
 <div class="row margin">
-    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" href="productlist/1" *ngFor="let product of result?.body.items">
+    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" routerLink="/productlist/{{product.id}}" *ngFor="let product of result?.body.items">
         <div class="clear">
             <div class="pic">
-                <img src="{{product.pictures[0].path}}" alt>
+                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
             </div>
             <div class="info">
                 <p class="font-middle gray bold">{{product.name}}</p>
-                <p class="font-small gray">{{product.description}}</p>
+                <p class="font-small gray">{{product.description.substring(0,43)+'...'}}</p>
                 <p class="font-large">￥{{product.price}}/{{product.unitName}}</p>
             </div>
         </div>

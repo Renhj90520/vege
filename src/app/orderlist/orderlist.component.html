@@ -1,13 +1,13 @@
-<div class="margin-all">
+<div class="padding-all">
   <p class="center"><i class="glyphicon glyphicon-list-alt"></i>我的订单</p>
   <hr>
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
       <p><span>{{order.id}}</span> <span class="right">{{order.state|orderstate}}</span></p>
-      <a class="col-xs-12 paddingvertical" href="products/{{product.id}}" *ngFor="let product of order.products">
+      <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.id}}" *ngFor="let product of order.products">
         <div class="clear">
           <div class="pic">
-            <img src="{{product.pictures[0].path}}" alt>
+            <img src="{{product.pictures[0].path}}" class="productimg img-responsive" alt>
           </div>
           <div class="info">
             <p class="font-middle gray">{{product.name}}</p>

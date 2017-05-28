@@ -14,8 +14,8 @@ body{
     margin-left: 5px;
     margin-right: 5px;
 }
-.margin-all{
-    margin: 5px 5px 50px 5px;
+.padding-all{
+    padding: 5px 5px 50px 5px;
 }
 
 a{
@@ -23,6 +23,9 @@ a{
 }
 a:hover{
     text-decoration: none;
+}
+.row{
+    margin: 0;
 }
 
 .paddingvertical{
@@ -98,9 +101,12 @@ a:hover{
 .center{
     text-align: center;
 }
-.row{
-    margin: 0;
-}
 .right{
     float: right;
+    padding-right: 10px;
+}
+
+.productimg{
+    width: 100px;
+    height: 100px;
 }
