@@ -14,11 +14,11 @@
     </div>
 </div>
 
-<div class="cart-info padding-all" *ngFor="let product of products">
+<div class="cart-info padding-all">
     <h5>选购的商品</h5>
     <hr>
     <div class="cart-list">
-        <div class="cart-item">
+        <div class="cart-item" *ngFor="let product of products">
             <div class="float-left">
                 <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
             </div>

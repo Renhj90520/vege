@@ -56,11 +56,11 @@ export class ProductComponent implements OnInit {
       });
   }
   onIncrease() {
-    this.count++;
+    this.count += this.product.step;
   }
 
   onDecrease() {
-    this.count--;
+    this.count -= this.product.step;
     if (this.count < 1) {
       this.count = 1;
     }

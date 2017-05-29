@@ -2,23 +2,42 @@
     <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
 </div>
 <div class="row">
-    <div class="col-sm-3" *ngFor="let category of categories">
-        <img src="{{category.iconPath}}" class="categories img-responsive" alt="icon" role="button" (click)="onCategoryClick(category.id)">
+    <div class="col-xs-3" *ngFor="let category of categories">
+        <img class="categories img-responsive" src="{{category.iconPath}}" alt="icon" role="button" (click)="onCategoryClick(category.id)">
         <p class="catename">{{category.name}}</p>
         <!--<img src="http://placehold.it/60x60" class="categories" alt="icon" role="button" (click)="onCategoryClick(category.id)">-->
     </div>
 </div>
 <div class="row margin">
-    <a class="col-md-3 col-sm-6 col-xs-12 paddingvertical" routerLink="/productlist/{{product.id}}" *ngFor="let product of result?.body.items">
-        <div class="clear">
-            <div class="pic">
+    <div class="col-md-3 col-sm-6 col-xs-12 paddingvertical clear" *ngFor="let product of products">
+        <div class="pic">
+            <a routerLink="/productlist/{{product.id}}">
                 <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
-            </div>
-            <div class="info">
-                <p class="font-middle gray bold">{{product.name}}</p>
-                <p class="font-small gray">{{product.description.substring(0,43)+'...'}}</p>
-                <p class="font-large">￥{{product.price}}/{{product.unitName}}</p>
-            </div>
+            </a>
         </div>
-    </a>
+        <div class="info">
+            <a routerLink="/productlist/{{product.id}}">
+                <p class="font-middle gray bold">{{product.name}}</p>
+                <!--<p class="font-small gray" *ngIf="product.description.length>=40">{{product.description.substring(0,40)+'...'}}</p>
+                <p class="font-small gray" *ngIf="product.description.length<40">{{product.description}}</p>-->
+                <p class="font-large">￥{{product.price}}/{{product.unitName}}</p>
+            </a>
+            <p>
+                <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
+                    <i class="glyphicon glyphicon-minus"></i>
+                    </button>
+                <input class="form-control inline" type="number" [(value)]="product.count" min="0">
+                <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+            </p>
+        </div>
+    </div>
+</div>
+<div *ngIf="products.length<=0">
+    <hr>
+    <p class="no-product">暂无商品</p>
+</div>
+<div class="btn-pay" role="button" (click)="gotoOrder()">
+    结算 <span class="badge">{{productsIncart.length}}</span>
 </div>
