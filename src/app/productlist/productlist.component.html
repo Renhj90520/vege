@@ -38,6 +38,6 @@
     <hr>
     <p class="no-product">暂无商品</p>
 </div>
-<div class="btn-pay" role="button" (click)="gotoOrder()">
+<div class="btn-pay" role="button" *ngIf="productsIncart.length>0" (click)="gotoOrder()">
     结算 <span class="badge">{{productsIncart.length}}</span>
 </div>
