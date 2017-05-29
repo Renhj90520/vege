@@ -1,10 +1,10 @@
-<div>
+<div class="visible-sm visible-xs">
     <img class="image-responsive" src="../../assets/images/banner.png" alt="banner" width="100%">
 </div>
 <div class="row">
     <div class="col-sm-3" *ngFor="let category of categories">
-        <img src="{{category.iconPath}}" class="categories" alt="icon" role="button" (click)="onCategoryClick(category.id)">
-        <p>{{category.name}}</p>
+        <img src="{{category.iconPath}}" class="categories img-responsive" alt="icon" role="button" (click)="onCategoryClick(category.id)">
+        <p class="catename">{{category.name}}</p>
         <!--<img src="http://placehold.it/60x60" class="categories" alt="icon" role="button" (click)="onCategoryClick(category.id)">-->
     </div>
 </div>

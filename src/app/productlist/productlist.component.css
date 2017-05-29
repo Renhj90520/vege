@@ -9,3 +9,11 @@
 .categories + p{
     text-align: center;
 }
+
+.carousel-inner{
+    min-height: 200px;
+}
+.catename{
+    color: #0272e2;
+    font-weight: bold;
+}

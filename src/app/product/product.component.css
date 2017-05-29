@@ -9,3 +9,6 @@
 #pictures{
     min-height: 260px; 
 }
+.carousel-inner>.item>img{
+    height: 300px;
+}

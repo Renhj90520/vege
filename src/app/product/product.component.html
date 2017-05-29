@@ -1,11 +1,11 @@
 <div class="container">
-    <div class="carousel slide" id="pictures" date-ride="carousel">
+    <div class="carousel slide" id="pictures" date-ride="carousel" *ngIf="product?.pictures.length>0">
         <ol class="carousel-indicators">
-            <li data-slide-to="i" *ngFor="let picture of product?.pictures;let i=index"></li>
+            <li data-target="#pictures" [attr.data-slide-to]="i" [class.active]="i==0" *ngFor="let picture of product?.pictures;let i = index;"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <div class="item" *ngFor="let picture of product?.pictures">
-                <img src="{{picture.path}}" alt="pic" class="image-responsive" width="100%">
+            <div class="item" *ngFor="let picture of product?.pictures;let i=index;" [class.active]="i==0">
+                <img class="img-responsive" src="{{picture.path}}" width="100%" height="300px " alt="pic">
             </div>
         </div>
         <a class="left carousel-control" data-slide="prev" href="#pictures" role="button">
