@@ -50,6 +50,7 @@ export class OrderComponent implements OnInit {
       this.orderService.addOrder(order, 'openid')
         .subscribe(res => {
           this.router.navigate(['orderlist'], { replaceUrl: true });
+          sessionStorage.removeItem('cartproducts');
         }, err => {
           if (err) {
             alert(err);
