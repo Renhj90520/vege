@@ -16,6 +16,8 @@ export class ProductlistComponent implements OnInit {
   categories: any[] = [];
   productsIncart: any[] = [];
   ngOnInit() {
+    this.productsIncart = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
+
     this.categoryService.getAllCategories()
       .subscribe(res => {
         if (res.body.length > 0) {
@@ -27,6 +29,16 @@ export class ProductlistComponent implements OnInit {
                 this.products.forEach(p => {
                   p.count = 0;
                 });
+                if (this.productsIncart.length > 0) {
+                  this.productsIncart.forEach((pc, index) => {
+                    let pp = this.products.find(pi => pi.id == pc.id);
+                    if (pp) {
+                      let pic = this.productsIncart[index];
+                      pp.count = pic.count;
+                      this.productsIncart[index] = pp;
+                    }
+                  })
+                }
               }
             });
         }
@@ -40,6 +52,16 @@ export class ProductlistComponent implements OnInit {
           this.products = res.body.items;
           this.products.forEach(p => {
             p.count = 0;
+            if (this.productsIncart.length > 0) {
+              this.productsIncart.forEach((pc, index) => {
+                let pp = this.products.find(pi => pi.id == pc.id);
+                if (pp) {
+                  let pic = this.productsIncart[index];
+                  pp.count = pic.count;
+                  this.productsIncart[index] = pp;
+                }
+              })
+            }
           })
         }
         else {
@@ -62,6 +84,8 @@ export class ProductlistComponent implements OnInit {
         this.productsIncart.splice(index, 1);
       }
     }
+    if (this.productsIncart.length > 0)
+      sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
   }
 
   onIncrease(product) {
@@ -69,6 +93,14 @@ export class ProductlistComponent implements OnInit {
     if (this.productsIncart.indexOf(product) < 0) {
       this.productsIncart.push(product);
     }
+    // let pincart = this.productsIncart.find(p => p.id == product.id);
+    // if (pincart) {
+    //   pincart.count += product.count;
+    // } else {
+    //   this.productsIncart.push(product);
+    // }
+    if (this.productsIncart.length > 0)
+      sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
   }
   gotoOrder() {
     if (this.productsIncart.length > 0) {

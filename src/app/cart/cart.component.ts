@@ -23,19 +23,29 @@ export class CartComponent implements OnInit {
   totalCost: number = 0;
 
   ngOnInit() {
-    this.cartService.getAllInCart().subscribe(res => {
-      this.message = res.message;
-      this.state = res.state;
-      this.products = res.body || [];
-      if (this.products.length <= 0) {
-        this.productService.getAllProduct(null, 1, 10, null)
-          .subscribe(res => {
-            this.suggestions = res.body.items || [];
-          })
-      } else {
-        this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
-      }
-    });
+    // this.cartService.getAllInCart().subscribe(res => {
+    //   this.message = res.message;
+    //   this.state = res.state;
+    //   this.products = res.body || [];
+    //   if (this.products.length <= 0) {
+    //     this.productService.getAllProduct(null, 1, 10, null)
+    //       .subscribe(res => {
+    //         this.suggestions = res.body.items || [];
+    //       })
+    //   } else {
+    //     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    //   }
+    // });
+
+    this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
+    if (this.products.length <= 0) {
+      this.productService.getAllProduct(null, 1, 10, null)
+        .subscribe(res => {
+          this.suggestions = res.body.items || [];
+        })
+    } else {
+      this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    }
   }
 
   gotoOrder() {
@@ -46,6 +56,7 @@ export class CartComponent implements OnInit {
   onIncrease(product) {
     product.count++;
     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onDecrease(product) {
@@ -54,5 +65,6 @@ export class CartComponent implements OnInit {
       product.count = 0;
     }
     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 }

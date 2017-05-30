@@ -2,7 +2,7 @@
     <div class="address-list">
         <p *ngFor="let address of addresses; let i=index">
             <span><input id="add{{i}}" name="address" type="radio" [(checked)]="address.ischecked" (change)="onAddressChange(address)"><label for="add{{i}}">{{address.street}}</label><br> {{address.name}} {{address.phone}}</span>
-            <span class="right"><i class="glyphicon glyphicon-remove" (click)="onAddrRemove(address)" role="button"></i></span>
+            <span class="right"><i class="glyphicon glyphicon-remove" role="button" (click)="onAddrRemove(address)"></i></span>
         </p>
         <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal">新建地址</button>
 
@@ -36,18 +36,20 @@
     <div class="row">
         <div class="col-xs-12 paddingvertical" *ngFor="let product of products"> 
             <div class="pic">
-                <img src="{{product.pictures[0].path}}" class="productimg img-responsive" alt>
+                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
             </div>
             <div class="info">
                 <p class="name">{{product.name}}</p>
                 <p class="name">￥{{product.price}}/{{product.unitName}}
-                    <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
-                        <i class="glyphicon glyphicon-minus"></i>
-                    </button>
-                    <input class="form-control inline" type="number" [(value)]="product.count" min="0">
-                    <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
-                        <i class="glyphicon glyphicon-plus"></i>
-                    </button>
+                    <span class="right">
+                        <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
+                            <i class="glyphicon glyphicon-minus"></i>
+                        </button>
+                        <input class="form-control inline" type="number" [(value)]="product.count" min="0">
+                        <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </button>
+                    </span>
                 </p>
                 <p class="item-total">小计：￥{{product.count * product.price}}</p>
             </div>

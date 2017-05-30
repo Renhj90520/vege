@@ -17,7 +17,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <div class="infodetail padding-all">
+    <div class="infodetail padding-all" *ngIf="product">
         <p class="font-middle gray bold">{{product?.name}}</p>
         <p class="font-small gray">{{product?.description}}</p>
         <p class="font-large">￥{{product?.price}}/{{product?.unitName}}</p>
@@ -26,7 +26,7 @@
                 <i class="glyphicon glyphicon-minus">
                 </i>
             </button>
-            <input class="form-control inline" type="number" min="1" [(value)]="count">
+            <input class="form-control inline" type="number" min="1" [(ngModel)]="product.count">
             <button class="btn btn-primary btn-xs" (click)="onIncrease()">
             <i class="glyphicon glyphicon-plus"></i>
             </button>

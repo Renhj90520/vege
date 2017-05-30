@@ -82,6 +82,7 @@ export class OrderComponent implements OnInit {
   onIncrease(product) {
     product.count++;
     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onDecrease(product) {
@@ -90,6 +91,7 @@ export class OrderComponent implements OnInit {
       product.count = 0;
     }
     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onAddressChange(address) {
