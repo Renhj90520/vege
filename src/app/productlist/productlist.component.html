@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="row margin">
-    <div class="col-md-3 col-sm-6 col-xs-12 paddingvertical clear" *ngFor="let product of products">
+    <div class="col-md-3 col-sm-6 col-xs-12 paddingvertical" *ngFor="let product of products">
         <div class="pic">
             <a routerLink="/productlist/{{product.id}}">
                 <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>

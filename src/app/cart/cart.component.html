@@ -1,4 +1,4 @@
-<div class="cart-empty padding-all" *ngIf="products!=null&&products.length==0">
+<div class="cart-empty padding-all" *ngIf="products==null||products.length==0">
     <p><i class="glyphicon glyphicon-shopping-cart"></i>购物车是空的</p>
     <hr>
     <div class="recommandation">
@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<div class="cart-info padding-all">
+<div class="cart-info padding-all" *ngIf="products!=null&&products.length>0">
     <h5>选购的商品</h5>
     <hr>
     <div class="cart-list">
