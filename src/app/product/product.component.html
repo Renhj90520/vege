@@ -20,7 +20,7 @@
     <div class="infodetail padding-all" *ngIf="product">
         <p class="font-middle gray bold">{{product?.name}}</p>
         <p class="font-small gray">{{product?.description}}</p>
-        <p class="font-large">￥{{product?.price}}/{{product?.unitName}}</p>
+        <p class="font-large red bold">￥{{product?.price}}/{{product?.unitName}}</p>
         <div>
             <button class="btn btn-primary btn-xs" (click)="onDecrease()">
                 <i class="glyphicon glyphicon-minus">

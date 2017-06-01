@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
 import { ProductService } from '../product/product.service';
+import { MathUtil } from '../shared/util';
 
 @Component({
   selector: 'app-cart',
@@ -44,7 +45,8 @@ export class CartComponent implements OnInit {
           this.suggestions = res.body.items || [];
         })
     } else {
-      this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+      this.products.forEach(p => p.cost = MathUtil.mutiple(p.count, p.price));
+      this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
     }
   }
 
@@ -54,17 +56,21 @@ export class CartComponent implements OnInit {
   }
 
   onIncrease(product) {
-    product.count++;
-    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    product.count = MathUtil.add(product.count, product.step);
+    product.cost = MathUtil.mutiple(product.count, product.price);
+    console.log('count' + product.count + 'price' + product.price + 'cost' + product.cost);
+    this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onDecrease(product) {
-    product.count--;
+    product.count = MathUtil.subtraction(product.count, product.step);
     if (product.count < 0) {
       product.count = 0;
     }
-    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    product.cost = MathUtil.mutiple(product.count, product.price);
+    console.log('count' + product.count + 'price' + product.price + 'cost' + product.cost);
+    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 }

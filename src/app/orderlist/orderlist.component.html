@@ -12,11 +12,11 @@
           <div class="info">
             <p class="font-middle gray">{{product.name}}</p>
             <p class="font-middle gray">数量：{{product.count}}</p>
-            <p class="font-large bold">￥{{product.price}}/{{product.unitName}}</p>
+            <p class="font-large bold red">￥{{product.price}}/{{product.unitName}}</p>
           </div>
         </div>
       </a>
-      <p>共{{order.products.length}}件商品 合计￥{{order.total}}</p>
+      <p>共{{order.products.length}}件商品 合计<span class="red bold">￥{{order.total}}</span></p>
       <p></p>
       <hr>
     </div>

@@ -11,7 +11,7 @@
                         <p class="font-middle gray">{{suggestion.name}}</p>
                         <p class="font-small gray" *ngIf="suggestion.description.length>30">{{suggestion.description.substring(0,30)+'...'}}</p>
                         <p class="font-small gray" *ngIf="suggestion.description.length<=30">{{suggestion.description}}</p>
-                        <p class="font-large bold">￥{{suggestion.price}}/{{suggestion.unitName}}</p>
+                        <p class="font-large bold red">￥{{suggestion.price}}/{{suggestion.unitName}}</p>
                     </div>
                 </div>
             </a>
@@ -29,7 +29,7 @@
             </div>
             <div class="item-info">
                 <p class="font-large">{{product.name}}</p>
-                <p>￥{{product.price}}/{{product.unitName}}</p>
+                <p class="red bold">￥{{product.price}}/{{product.unitName}}</p>
                 <p>
                     <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                         <i class="glyphicon glyphicon-minus"></i>
@@ -40,12 +40,12 @@
                         </button>
                 </p>
             </div>
-            <p>小计：￥{{product.price*product.count}}</p>
+            <p class="red bold">小计：￥{{product.cost}}</p>
         </div>
     </div>
 
     <div class="operator row">
-        <div class="col-xs-8 total">总计：￥{{totalCost}}</div>
+        <div class="col-xs-8 total red bold">总计：￥{{totalCost}}</div>
         <div class="col-xs-4 button" (click)="gotoOrder()">填选地址</div>
     </div>
 </div>

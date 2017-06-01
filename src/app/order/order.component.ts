@@ -5,6 +5,7 @@ import { OrderService } from './order.service';
 import { CartService } from '../cart/cart.service';
 import { Product } from '../models/product';
 import { Address } from '../models/address';
+import { MathUtil } from '../shared/util';
 
 @Component({
   selector: 'app-order',
@@ -36,7 +37,8 @@ export class OrderComponent implements OnInit {
     //     this.products = res.body;
     //   });
     this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
-    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    this.products.forEach(p => { p.cost = MathUtil.mutiple(p.count, p.price) });
+    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
   }
   gotoOrders() {
     let address = this.addresses.filter(a => a.ischecked);
@@ -81,17 +83,19 @@ export class OrderComponent implements OnInit {
       });
   }
   onIncrease(product) {
-    product.count++;
-    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    product.count = MathUtil.add(product.count, product.step);
+    product.cost = MathUtil.mutiple(product.count, product.price);
+    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onDecrease(product) {
-    product.count--;
+    product.count = MathUtil.subtraction(product.count, product.step);
     if (product.count < 0) {
       product.count = 0;
     }
-    this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+    product.cost = MathUtil.mutiple(product.count, product.price);
+    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 

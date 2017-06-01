@@ -20,7 +20,7 @@
                 <p class="font-middle gray bold">{{product.name}}</p>
                 <!--<p class="font-small gray" *ngIf="product.description.length>=40">{{product.description.substring(0,40)+'...'}}</p>
                 <p class="font-small gray" *ngIf="product.description.length<40">{{product.description}}</p>-->
-                <p class="font-large">￥{{product.price}}/{{product.unitName}}</p>
+                <p class="font-large red bold">￥{{product.price}}/{{product.unitName}}</p>
             </a>
             <p>
                 <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
