@@ -42,7 +42,7 @@ export class OrderComponent implements OnInit {
     let address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
       let order = {
-        createtime: this.getNow(),
+        // createtime: this.getNow(),
         state: 0, addressId: address[0].id, products: this.products.map(p => {
           return { productid: p.id, count: p.count, price: p.price }
         })
@@ -61,15 +61,15 @@ export class OrderComponent implements OnInit {
     }
 
   }
-  getNow() {
-    let now = new Date();
-    let month = now.getMonth() < 10 ? '0' + now.getMonth() : now.getMonth();
-    let day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-    let hour = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
-    let minute = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
-    let seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds();
-    return `${now.getFullYear()}\-${month}\-${day} ${hour}:${minute}:${seconds}`;
-  }
+  // getNow() {
+  //   let now = new Date();
+  //   let month = now.getMonth() < 10 ? '0' + now.getMonth() : now.getMonth();
+  //   let day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+  //   let hour = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
+  //   let minute = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
+  //   let seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds();
+  //   return `${now.getFullYear()}\-${month}\-${day} ${hour}:${minute}:${seconds}`;
+  // }
   onAddAddress() {
     this.addressService.addNewAddress(this.newAddr)
       .subscribe(res => {

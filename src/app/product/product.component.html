@@ -26,7 +26,7 @@
                 <i class="glyphicon glyphicon-minus">
                 </i>
             </button>
-            <input class="form-control inline" type="number" min="1" [(ngModel)]="product.count">
+            <input class="form-control inline" disabled type="number" min="{{product.step}}" [(ngModel)]="product.count">
             <button class="btn btn-primary btn-xs" (click)="onIncrease()">
             <i class="glyphicon glyphicon-plus"></i>
             </button>

@@ -35,7 +35,7 @@ export class ProductComponent implements OnInit {
               let index = this.productInCart.indexOf(pp);
               this.productInCart[index] = this.product;
             } else {
-              this.product.count = 1;
+              this.product.count = this.product.step;
             }
           } else {
             alert(res.message);
