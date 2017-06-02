@@ -23,6 +23,7 @@ export class OrderComponent implements OnInit {
   products: any[];
   newAddr: Address = new Address();
   totalCost: number = 0;
+  hasDelivery: boolean = false;
   ngOnInit() {
     this.addressService.getAllAddress()
       .subscribe(res => {
@@ -38,21 +39,32 @@ export class OrderComponent implements OnInit {
     //   });
     this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
     this.products.forEach(p => { p.cost = MathUtil.mutiple(p.count, p.price) });
-    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    this.handleDelievery();
   }
   gotoOrders() {
+    debugger;
     let address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
       let order = {
         // createtime: this.getNow(),
+        deliveryCharge: 0,
         state: 0, addressId: address[0].id, products: this.products.map(p => {
-          return { productid: p.id, count: p.count, price: p.price }
+          return { productId: p.id, count: p.count, price: p.price }
         })
       };
-      this.orderService.addOrder(order, 'openid')
+      if (this.hasDelivery) {
+        order.deliveryCharge = 5;
+      }
+      debugger;
+      this.orderService.addOrder(order, null)
         .subscribe(res => {
-          this.router.navigate(['orderlist'], { replaceUrl: true });
-          sessionStorage.removeItem('cartproducts');
+          debugger;
+          if (res.state == 1) {
+            this.router.navigate(['orderlist'], { replaceUrl: true });
+            sessionStorage.removeItem('cartproducts');
+          } else {
+            alert(res.message);
+          }
         }, err => {
           if (err) {
             alert(err);
@@ -85,7 +97,8 @@ export class OrderComponent implements OnInit {
   onIncrease(product) {
     product.count = MathUtil.add(product.count, product.step);
     product.cost = MathUtil.mutiple(product.count, product.price);
-    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+
+    this.handleDelievery();
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
@@ -95,7 +108,7 @@ export class OrderComponent implements OnInit {
       product.count = 0;
     }
     product.cost = MathUtil.mutiple(product.count, product.price);
-    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    this.handleDelievery();
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
@@ -116,6 +129,16 @@ export class OrderComponent implements OnInit {
         }, err => {
           alert(err);
         });
+    }
+  }
+  handleDelievery() {
+    let total = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    if (total < 20 && total > 0) {
+      this.hasDelivery = true;
+      this.totalCost = MathUtil.add(total, 5);
+    } else {
+      this.hasDelivery = false;
+      this.totalCost = total;
     }
   }
 }

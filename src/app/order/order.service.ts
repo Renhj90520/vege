@@ -10,6 +10,7 @@ export class OrderService {
     constructor(private http: Http) { }
 
     addOrder(order: any, openId?: string) {
+        debugger;
         let url = baseUrl + "orders/";
         if (openId) {
             url + openId;

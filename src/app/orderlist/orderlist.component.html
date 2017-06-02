@@ -3,11 +3,12 @@
   <hr>
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
-      <p><span>{{order.id}}</span> <span class="right">{{order.state|orderstate}}</span></p>
+      <p><span class="left">{{order.state|orderstate}}</span> <span class="red" *ngIf="order.state==2">{{order.cancelReason}}</span></p>
+      <p>{{order.createTime|mydate}}</p>
       <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.id}}" *ngFor="let product of order.products">
         <div class="clear">
           <div class="pic">
-            <img src="{{product.pictures[0].path}}" class="productimg img-responsive" alt>
+            <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
           </div>
           <div class="info">
             <p class="font-middle gray">{{product.name}}</p>
@@ -16,7 +17,7 @@
           </div>
         </div>
       </a>
-      <p>共{{order.products.length}}件商品 合计<span class="red bold">￥{{order.total}}</span></p>
+      <p>共{{order.products.length}}件商品 合计<span class="red bold">￥{{order.total}} <span class="red bold" *ngIf="order.deliveryCharge>0">含￥{{order.deliveryCharge}}运费</span> </span></p>
       <p></p>
       <hr>
     </div>

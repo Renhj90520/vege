@@ -4,6 +4,7 @@ import { ProductService } from './product.service';
 import { Result } from '../shared/result';
 import { CartService } from '../cart/cart.service';
 import { Product } from '../models/product';
+import { MathUtil } from '../shared/util';
 
 @Component({
   selector: 'app-product',
@@ -67,16 +68,16 @@ export class ProductComponent implements OnInit {
     let index = this.productInCart.indexOf(this.product)
     if (index < 0) {
       this.productInCart.push(this.product);
-    }else{
+    } else {
       alert('该商品已加入购物车！');
     }
   }
   onIncrease() {
-    this.product.count += this.product.step;
+    this.product.count = MathUtil.add(this.product.count, this.product.step);
   }
 
   onDecrease() {
-    this.product.count -= this.product.step;
+    this.product.count = MathUtil.subtraction(this.product.count, this.product.step);
     if (this.product.count < this.product.step) {
       this.product.count = this.product.step;
     }

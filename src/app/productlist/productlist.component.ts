@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product/product.service';
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router';
+import { MathUtil } from '../shared/util';
 
 @Component({
   selector: 'app-productlist',
@@ -73,7 +74,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onDecrease(product) {
-    product.count -= product.step;
+    product.count = MathUtil.subtraction(product.count, product.step);
     if (product.count < 0) {
       product.count = 0;
     }
@@ -89,7 +90,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onIncrease(product) {
-    product.count += product.step;
+    product.count = MathUtil.add(product.count, product.step);
     if (this.productsIncart.indexOf(product) < 0) {
       this.productsIncart.push(product);
     }

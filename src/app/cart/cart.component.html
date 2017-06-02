@@ -34,7 +34,7 @@
                     <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                         <i class="glyphicon glyphicon-minus"></i>
                         </button>
-                    <input class="form-control inline" disabled type="number" [(value)]="product.count" min="0">
+                    <input class="form-control inline" type="number" disabled [(value)]="product.count" min="0">
                     <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
                         <i class="glyphicon glyphicon-plus"></i>
                         </button>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="operator row">
-        <div class="col-xs-8 total red bold">总计：￥{{totalCost}}</div>
+        <div class="col-xs-8 total red bold">总计:￥{{totalCost}} <span class="red bold" *ngIf="hasDelivery">含运费￥5(满20免运费)</span></div>
         <div class="col-xs-4 button" (click)="gotoOrder()">填选地址</div>
     </div>
 </div>

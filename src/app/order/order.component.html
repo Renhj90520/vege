@@ -57,6 +57,6 @@
     </div>
 </div>
 <div class="operator row">
-    <div class="col-xs-8 total red bold">总计：￥{{totalCost}}</div>
+    <div class="col-xs-8 total red bold">总计:￥{{totalCost}} <span class="red bold" *ngIf="hasDelivery">含运费￥5(满20免运费)</span> </div>
     <div class="col-xs-4 button" (click)="gotoOrders()">确认购买</div>
 </div>

@@ -12,6 +12,7 @@ import { OrderlistComponent } from './orderlist/orderlist.component';
 import { OrderComponent } from './order/order.component';
 import { ProductComponent } from './product/product.component';
 import { OrderStatePipe } from './shared/orderstate.pipe';
+import { MyDatePipe } from './shared/mydate.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { OrderStatePipe } from './shared/orderstate.pipe';
     OrderlistComponent,
     OrderComponent,
     ProductComponent,
-    OrderStatePipe
+    OrderStatePipe,
+    MyDatePipe
   ],
   imports: [
     BrowserModule,

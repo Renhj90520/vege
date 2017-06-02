@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
 
   suggestions: any[] = [];
   totalCost: number = 0;
+  hasDelivery: boolean = false;
 
   ngOnInit() {
     // this.cartService.getAllInCart().subscribe(res => {
@@ -46,7 +47,8 @@ export class CartComponent implements OnInit {
         })
     } else {
       this.products.forEach(p => p.cost = MathUtil.mutiple(p.count, p.price));
-      this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
+      this.handleDelievery();
+      // this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
     }
   }
 
@@ -58,8 +60,8 @@ export class CartComponent implements OnInit {
   onIncrease(product) {
     product.count = MathUtil.add(product.count, product.step);
     product.cost = MathUtil.mutiple(product.count, product.price);
-    console.log('count' + product.count + 'price' + product.price + 'cost' + product.cost);
-    this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
+    this.handleDelievery();
+    // this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
@@ -69,8 +71,19 @@ export class CartComponent implements OnInit {
       product.count = 0;
     }
     product.cost = MathUtil.mutiple(product.count, product.price);
-    console.log('count' + product.count + 'price' + product.price + 'cost' + product.cost);
-    this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    this.handleDelievery();
+    // this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
+  }
+
+  handleDelievery() {
+    let total = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    if (total < 20 && total > 0) {
+      this.hasDelivery = true;
+      this.totalCost = MathUtil.add(total, 5);
+    } else {
+      this.hasDelivery = false;
+      this.totalCost = total;
+    }
   }
 }
