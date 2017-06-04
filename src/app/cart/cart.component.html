@@ -9,8 +9,8 @@
                     <img class="img-responsive" src="{{suggestion.pictures[0].path}}" alt>
                     <div class="suggest-item-info">
                         <p class="font-middle gray">{{suggestion.name}}</p>
-                        <p class="font-small gray" *ngIf="suggestion.description.length>30">{{suggestion.description.substring(0,30)+'...'}}</p>
-                        <p class="font-small gray" *ngIf="suggestion.description.length<=30">{{suggestion.description}}</p>
+                        <p class="font-smaller gray" *ngIf="suggestion.description.length>30">{{suggestion.description.substring(0,30)+'...'}}</p>
+                        <p class="font-smaller gray" *ngIf="suggestion.description.length<=30">{{suggestion.description}}</p>
                         <p class="font-large bold red">￥{{suggestion.price}}/{{suggestion.unitName}}</p>
                     </div>
                 </div>
