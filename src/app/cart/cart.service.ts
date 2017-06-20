@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptionsArgs } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import { Product } from '../models/product';
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class CartService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     products: any[];
 

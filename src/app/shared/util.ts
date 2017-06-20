@@ -84,5 +84,12 @@ export class MathUtil {
             return (r1 / r2) * Math.pow(10, t2 - t1);
         }
     }
-
+}
+export class CommonUtil {
+    static getToken() {
+        return sessionStorage.getItem('token');
+    }
+    static getOpenid(){
+        return sessionStorage.getItem('openid');
+    }
 }

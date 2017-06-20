@@ -1,18 +1,18 @@
 import { Product } from './product';
 export class Address {
     constructor();
-    constructor(id?: number, userId?: string, street?: string, name?: string, phone?: string) {
-        this.id = id;
-        this.userId = userId;
-        this.street = street;
-        this.name = name;
-        this.phone = phone;
+    constructor(id?: number, openId?: string, street?: string, name?: string, phone?: string) {
+        this.Id = id;
+        this.OpenId = openId;
+        this.Street = street;
+        this.Name = name;
+        this.Phone = phone;
     }
-    id?: number;
-    userId?: string;
-    street?: string;
-    name?: string;
-    phone?: string;
+    Id?: number;
+    OpenId?: string;
+    Street?: string;
+    Name?: string;
+    Phone?: string;
     public ischecked?: boolean = false;
     public products?: Product[];
 }

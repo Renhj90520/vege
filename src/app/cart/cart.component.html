@@ -4,7 +4,7 @@
     <div class="recommandation">
         <p>为你推荐</p>
         <div class="row">
-            <a class="col-xs-6 paddinghorizontal" routerLink="/productlist/{{suggestion.id}}" *ngFor="let suggestion of suggestions">
+            <a class="col-xs-6 col-sm-4 col-md-3 paddinghorizontal" routerLink="/productlist/{{suggestion.id}}" *ngFor="let suggestion of suggestions">
                 <div class="suggest-item">
                     <img class="img-responsive" src="{{suggestion.pictures[0].path}}" alt>
                     <div class="suggest-item-info">

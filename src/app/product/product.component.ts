@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductService } from './product.service';
 import { Result } from '../shared/result';
-import { CartService } from '../cart/cart.service';
+// import { CartService } from '../cart/cart.service';
 import { Product } from '../models/product';
 import { MathUtil } from '../shared/util';
+import { FavoriteService } from '../favoritelist/favorite.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
-  providers: [ProductService, CartService]
+  providers: [ProductService, FavoriteService]
 })
 export class ProductComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService) { }
+    private favService: FavoriteService) { }
 
   product;
   productInCart: any[] = [];
+  isFavorite: boolean = false;
+  favorite;
   // count: number = 1;
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
@@ -43,6 +46,16 @@ export class ProductComponent implements OnInit {
           }
         }, err => {
           alert(err);
+        });
+      let openid = sessionStorage.getItem('openid');
+      this.favService.getFavorite(openid, id)
+        .subscribe(res => {
+          if (res.state == 1 && res.body.length > 0) {
+            this.favorite == res.body[0];
+            this.isFavorite = true;
+          } else {
+            this.isFavorite = false;
+          }
         });
     });
 
@@ -81,5 +94,24 @@ export class ProductComponent implements OnInit {
     if (this.product.count < this.product.step) {
       this.product.count = this.product.step;
     }
+  }
+  addFav(id) {
+    let openid = sessionStorage.getItem('openid');
+    this.favService.addFavorite(openid, id)
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.isFavorite = true;
+        }
+      });
+  }
+
+  removeFav() {
+    let openid = sessionStorage.getItem('openid');
+    this.favService.deleteFavorite(this.favorite.favId)
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.isFavorite = false;
+        }
+      })
   }
 }

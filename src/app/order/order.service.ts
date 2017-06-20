@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import 'rxjs/add/operator/map';
 import { Address } from '../models/address';
@@ -7,10 +7,9 @@ import { Address } from '../models/address';
 @Injectable()
 export class OrderService {
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     addOrder(order: any, openId?: string) {
-        debugger;
         let url = baseUrl + "orders/";
         if (openId) {
             url + openId;

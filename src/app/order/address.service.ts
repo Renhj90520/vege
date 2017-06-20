@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import 'rxjs/add/operator/map';
 import { Address } from '../models/address';
@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AddressService {
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getAllAddress(openId?: string) {
         let url = baseUrl + "addresses/";

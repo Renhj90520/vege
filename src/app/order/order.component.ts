@@ -25,7 +25,8 @@ export class OrderComponent implements OnInit {
   totalCost: number = 0;
   hasDelivery: boolean = false;
   ngOnInit() {
-    this.addressService.getAllAddress()
+    let openid = sessionStorage.getItem('openid');
+    this.addressService.getAllAddress(openid)
       .subscribe(res => {
         this.addresses = res.body;
         if (this.addresses && this.addresses.length > 0) {
@@ -42,23 +43,21 @@ export class OrderComponent implements OnInit {
     this.handleDelievery();
   }
   gotoOrders() {
-    debugger;
     let address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
+      let openid = sessionStorage.getItem('openid');
       let order = {
         // createtime: this.getNow(),
-        deliveryCharge: 0,
-        state: 0, addressId: address[0].id, products: this.products.map(p => {
-          return { productId: p.id, count: p.count, price: p.price }
+        DeliveryCharge: 0,
+        State: 0, AddressId: address[0].Id, OpenId: openid, products: this.products.map(p => {
+          return { ProductId: p.id, Count: p.count, Price: p.price }
         })
       };
       if (this.hasDelivery) {
-        order.deliveryCharge = 5;
+        order.DeliveryCharge = 5;
       }
-      debugger;
       this.orderService.addOrder(order, null)
         .subscribe(res => {
-          debugger;
           if (res.state == 1) {
             this.router.navigate(['orderlist'], { replaceUrl: true });
             sessionStorage.removeItem('cartproducts');
@@ -85,6 +84,8 @@ export class OrderComponent implements OnInit {
   //   return `${now.getFullYear()}\-${month}\-${day} ${hour}:${minute}:${seconds}`;
   // }
   onAddAddress() {
+    let openid = sessionStorage.getItem('openid');
+    this.newAddr.OpenId = openid;
     this.addressService.addNewAddress(this.newAddr)
       .subscribe(res => {
         if (res.state == 1 && res.body) {

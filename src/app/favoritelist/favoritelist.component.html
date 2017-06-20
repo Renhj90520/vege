@@ -1,0 +1,27 @@
+<div *ngIf="favorites==null||favorites.lenth==0"> 暂无收藏 </div>
+<div class="row margin" *ngIf="favorites!=null&&favorites.length>0">
+    <div class="col-md-3 col-sm-6 col-xs-12 paddingvertical" *ngFor="let product of favorites">
+        <div class="pic">
+            <a routerLink="/productlist/{{product.id}}">
+                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
+            </a>
+        </div>
+        <div class="info">
+            <a routerLink="/productlist/{{product.id}}">
+                <p class="font-middle gray bold">{{product.name}}</p>
+                <!--<p class="font-smaller gray" *ngIf="product.description.length>=40">{{product.description.substring(0,40)+'...'}}</p>
+                <p class="font-smaller gray" *ngIf="product.description.length<40">{{product.description}}</p>-->
+                <p class="font-large red bold">￥{{product.price}}/{{product.unitName}}</p>
+            </a>
+            <p>
+                <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
+                    <i class="glyphicon glyphicon-minus"></i>
+                    </button>
+                <input class="form-control inline" type="number" disabled [(value)]="product.count" min="0">
+                <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+            </p>
+        </div>
+    </div>
+</div>

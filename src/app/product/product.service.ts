@@ -1,11 +1,11 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { baseUrl } from '../shared/settings';
 
 @Injectable()
 export class ProductService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getAllProduct(id?: number, index?: number, perPage?: number, category?: number) {
         let url: string = baseUrl + "products/";

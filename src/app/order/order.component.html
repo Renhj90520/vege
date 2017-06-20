@@ -11,12 +11,12 @@
                 <form method="post" #addrForm="ngForm">
                     <div class="form-group">
                         <label for="username">姓名</label>
-                        <input class="form-control" id="username" name="username" type="text" required #name="ngModel" [(ngModel)]="newAddr.name">
+                        <input class="form-control" id="username" name="username" type="text" required #name="ngModel" [(ngModel)]="newAddr.Name">
                         <p class="error-label" *ngIf="name.touched&&!name.valid">姓名不能为空</p>
                     </div>
                     <div class="form-group">
                         <label for="userphone">电话</label>
-                        <input class="form-control" id="userphone" name="userphone" type="number" required #phone="ngModel" [(ngModel)]="newAddr.phone">
+                        <input class="form-control" id="userphone" name="userphone" type="number" required #phone="ngModel" [(ngModel)]="newAddr.Phone">
                         <p class="error-label" *ngIf="phone.touched&&!phone.valid">电话不能为空</p>
                     </div>
                     <div class="form-group">
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="userstreet">详细地址</label>
-                        <input class="form-control" id="userstreet" name="userstreet" type="textarea" required #street="ngModel" [(ngModel)]="newAddr.street">
+                        <input class="form-control" id="userstreet" name="userstreet" type="textarea" required #street="ngModel" [(ngModel)]="newAddr.Street">
                         <p class="error-label" *ngIf="street.touched&&!street.valid">详细地址不能为空</p>
                     </div>
                     <button class="btn btn-primary" data-target="#addaddress" data-toggle="modal" type="submit" (click)="onAddAddress()" [disabled]="!addrForm.valid">添加</button>

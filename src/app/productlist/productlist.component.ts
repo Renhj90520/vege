@@ -3,12 +3,13 @@ import { ProductService } from '../product/product.service';
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router';
 import { MathUtil } from '../shared/util';
+import { AuthGuard } from '../shared/authguard';
 
 @Component({
   selector: 'app-productlist',
   templateUrl: './productlist.component.html',
   styleUrls: ['./productlist.component.css'],
-  providers: [ProductService, CategoryService]
+  providers: [ProductService, CategoryService, AuthGuard]
 })
 export class ProductlistComponent implements OnInit {
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) { }
