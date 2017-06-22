@@ -15,19 +15,23 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
-      let openid = params['openid'];
-      this.loginService.gettoken(openid)
-        .subscribe(res => {
-          if (res.state == 1) {
-            sessionStorage.setItem('openid', openid);
-            sessionStorage.setItem('token', res.body);
-            this.router.navigate(['productlist'], { replaceUrl: true });
-          } else {
-            this.loginService.redirectAuth().subscribe()
-          }
-        }, err => {
-          alert(err);
-        });
+      let openid = params['openid'] || '123';//TODO
+      if (openid) {
+        this.loginService.gettoken(openid)
+          .subscribe(res => {
+            if (res.state == 1) {
+              sessionStorage.setItem('openid', openid);
+              sessionStorage.setItem('token', res.body);
+              this.router.navigate(['productlist'], { replaceUrl: true });
+            } else {
+              this.loginService.redirectAuth().subscribe()
+            }
+          }, err => {
+            alert(err);
+          });
+      } else {
+        this.loginService.redirectAuth().subscribe();
+      }
     });
   }
 

@@ -29,14 +29,14 @@ export class ProductlistComponent implements OnInit {
               if (res.state == 1) {
                 this.products = res.body.items;
                 this.products.forEach(p => {
-                  p.count = 0;
+                  p.Count = 0;
                 });
                 if (this.productsIncart.length > 0) {
                   this.productsIncart.forEach((pc, index) => {
-                    let pp = this.products.find(pi => pi.id == pc.id);
+                    let pp = this.products.find(pi => pi.Id == pc.Id);
                     if (pp) {
                       let pic = this.productsIncart[index];
-                      pp.count = pic.count;
+                      pp.Count = pic.Count;
                       this.productsIncart[index] = pp;
                     }
                   })
@@ -53,13 +53,13 @@ export class ProductlistComponent implements OnInit {
         if (res.state == 1) {
           this.products = res.body.items;
           this.products.forEach(p => {
-            p.count = 0;
+            p.Count = 0;
             if (this.productsIncart.length > 0) {
               this.productsIncart.forEach((pc, index) => {
-                let pp = this.products.find(pi => pi.id == pc.id);
+                let pp = this.products.find(pi => pi.Id == pc.Id);
                 if (pp) {
                   let pic = this.productsIncart[index];
-                  pp.count = pic.count;
+                  pp.Count = pic.Count;
                   this.productsIncart[index] = pp;
                 }
               })
@@ -75,13 +75,13 @@ export class ProductlistComponent implements OnInit {
   }
 
   onDecrease(product) {
-    product.count = MathUtil.subtraction(product.count, product.step);
+    product.count = MathUtil.subtraction(product.Count, product.Step);
     if (product.count < 0) {
-      product.count = 0;
+      product.Count = 0;
     }
 
     let index = this.productsIncart.indexOf(product);
-    if (product.count == 0) {
+    if (product.Count == 0) {
       if (index >= 0) {
         this.productsIncart.splice(index, 1);
       }
@@ -91,7 +91,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onIncrease(product) {
-    product.count = MathUtil.add(product.count, product.step);
+    product.Count = MathUtil.add(product.Count, product.Step);
     if (this.productsIncart.indexOf(product) < 0) {
       this.productsIncart.push(product);
     }

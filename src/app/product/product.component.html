@@ -1,11 +1,11 @@
 <div class="container">
-    <div class="carousel slide" id="pictures" date-ride="carousel" *ngIf="product?.pictures.length>0">
+    <div class="carousel slide" id="pictures" date-ride="carousel" *ngIf="product?.Pictures.length>0">
         <ol class="carousel-indicators">
             <li data-target="#pictures" [attr.data-slide-to]="i" [class.active]="i==0" *ngFor="let picture of product?.pictures;let i = index;"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <div class="item" *ngFor="let picture of product?.pictures;let i=index;" [class.active]="i==0">
-                <img class="img-responsive" src="{{picture.path}}" alt="pic" width="100%" height="300px ">
+            <div class="item" *ngFor="let picture of product?.Pictures;let i=index;" [class.active]="i==0">
+                <img class="img-responsive" src="{{picture.Path}}" alt="pic" width="100%" height="300px ">
             </div>
         </div>
         <a class="left carousel-control" data-slide="prev" href="#pictures" role="button">
@@ -18,15 +18,15 @@
         </a>
     </div>
     <div class="infodetail padding-all" *ngIf="product">
-        <p class="font-middle gray bold">{{product?.name}}</p>
-        <p class="font-small gray">{{product?.description}}</p>
-        <p class="font-large red bold">￥{{product?.price}}/{{product?.unitName}}</p>
+        <p class="font-middle gray bold">{{product?.Name}}</p>
+        <p class="font-small gray">{{product?.Description}}</p>
+        <p class="font-large red bold">￥{{product?.Price}}/{{product?.UnitName}}</p>
         <div>
             <button class="btn btn-primary btn-xs" (click)="onDecrease()">
                 <i class="glyphicon glyphicon-minus">
                 </i>
             </button>
-            <input class="form-control inline" type="number" disabled min="{{product.step}}" [(ngModel)]="product.count">
+            <input class="form-control inline" type="number" disabled min="{{product.Step}}" [(ngModel)]="product.Count">
             <button class="btn btn-primary btn-xs" (click)="onIncrease()">
             <i class="glyphicon glyphicon-plus"></i>
             </button>
@@ -34,7 +34,7 @@
     </div>
     <div class="operator row">
         <div class="col-xs-3 icon">
-            <p class="glyphicon glyphicon-heart-empty" (click)="addFav(product.id)" *ngIf="!isFavorite"></p>
+            <p class="glyphicon glyphicon-heart-empty" (click)="addFav(product.Id)" *ngIf="!isFavorite"></p>
             <p class="glyphicon glyphicon-heart red" (click)="removeFav()" *ngIf="isFavorite"></p>
             <p>关注</p>
         </div>

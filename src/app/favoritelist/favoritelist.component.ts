@@ -16,7 +16,7 @@ export class FavoritelistComponent implements OnInit {
   ngOnInit() {
     this.productsIncart = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
     let openid = sessionStorage.getItem('openid');
-    this.favService.getFavorite(openid || '123')//TODO
+    this.favService.getFavorite(openid || 'undefined')//TODO
       .subscribe(res => {
         if (res.state == 1) {
           this.favorites = res.body || [];

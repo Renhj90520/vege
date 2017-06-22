@@ -3,21 +3,21 @@
   <hr>
   <div class="order-list">
     <div class="order-item" *ngFor="let order of orders">
-      <p><span class="left">{{order.state|orderstate}}</span> <span class="red" *ngIf="order.state==2">{{order.cancelReason}}</span></p>
-      <p>{{order.createTime|mydate}}</p>
-      <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.id}}" *ngFor="let product of order.products">
+      <p><span class="left">{{order.State|orderstate}}</span> <span class="red" *ngIf="order.State==2">{{order.CancelReason}}</span></p>
+      <p>{{order.CreateTime|mydate}}</p>
+      <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.Id}}" *ngFor="let product of order.Products">
         <div class="clear">
           <div class="pic">
-            <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
+            <img class="productimg img-responsive" src="{{product.Pictures[0].Path}}" alt>
           </div>
           <div class="info">
-            <p class="font-middle gray">{{product.name}}</p>
-            <p class="font-middle gray">数量：{{product.count}}</p>
-            <p class="font-large bold red">￥{{product.price}}/{{product.unitName}}</p>
+            <p class="font-middle gray">{{product.Name}}</p>
+            <p class="font-middle gray">数量：{{product.Count}}</p>
+            <p class="font-large bold red">￥{{product.Price}}/{{product.UnitName}}</p>
           </div>
         </div>
       </a>
-      <p>共{{order.products.length}}件商品 合计<span class="red bold">￥{{order.total}} <span class="red bold" *ngIf="order.deliveryCharge>0">含￥{{order.deliveryCharge}}运费</span> </span></p>
+      <p>共{{order.Products.length}}件商品 合计<span class="red bold">￥{{order.total}} <span class="red bold" *ngIf="order.DeliveryCharge>0">含￥{{order.DeliveryCharge}}运费</span> </span></p>
       <p></p>
       <hr>
     </div>

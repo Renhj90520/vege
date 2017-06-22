@@ -17,9 +17,9 @@ export class OrderlistComponent implements OnInit {
       .subscribe(res => {
         this.orders = res.body.items;
         this.orders.forEach(order => {
-          let total = order.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
-          if (order.deliveryCharge != 0) {
-            order.total = MathUtil.add(total, order.deliveryCharge);
+          let total = order.Products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
+          if (order.DeliveryCharge != 0) {
+            order.total = MathUtil.add(total, order.DeliveryCharge);
           } else {
             order.total = total;
           }

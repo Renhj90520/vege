@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit {
     //     this.products = res.body;
     //   });
     this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
-    this.products.forEach(p => { p.cost = MathUtil.mutiple(p.count, p.price) });
+    this.products.forEach(p => { p.Cost = MathUtil.mutiple(p.Count, p.Price) });
     this.handleDelievery();
   }
   gotoOrders() {
@@ -50,7 +50,7 @@ export class OrderComponent implements OnInit {
         // createtime: this.getNow(),
         DeliveryCharge: 0,
         State: 0, AddressId: address[0].Id, OpenId: openid, products: this.products.map(p => {
-          return { ProductId: p.id, Count: p.count, Price: p.price }
+          return { ProductId: p.Id, Count: p.Count, Price: p.Price }
         })
       };
       if (this.hasDelivery) {
@@ -96,19 +96,19 @@ export class OrderComponent implements OnInit {
       });
   }
   onIncrease(product) {
-    product.count = MathUtil.add(product.count, product.step);
-    product.cost = MathUtil.mutiple(product.count, product.price);
+    product.Count = MathUtil.add(product.Count, product.Step);
+    product.Cost = MathUtil.mutiple(product.Count, product.Price);
 
     this.handleDelievery();
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
 
   onDecrease(product) {
-    product.count = MathUtil.subtraction(product.count, product.step);
-    if (product.count < 0) {
-      product.count = 0;
+    product.Count = MathUtil.subtraction(product.Count, product.Step);
+    if (product.Count < 0) {
+      product.Count = 0;
     }
-    product.cost = MathUtil.mutiple(product.count, product.price);
+    product.Cost = MathUtil.mutiple(product.Count, product.Price);
     this.handleDelievery();
     sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
   }
@@ -120,7 +120,7 @@ export class OrderComponent implements OnInit {
 
   onAddrRemove(addr) {
     if (confirm('确认删除该地址吗？')) {
-      this.addressService.deleteAddress(addr.id)
+      this.addressService.deleteAddress(addr.Id)
         .subscribe(res => {
           if (res.state == 1) {
             this.addresses.splice(this.addresses.indexOf(addr), 1);
@@ -133,7 +133,7 @@ export class OrderComponent implements OnInit {
     }
   }
   handleDelievery() {
-    let total = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+    let total = this.products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
     if (total < 20 && total > 0) {
       this.hasDelivery = true;
       this.totalCost = MathUtil.add(total, 5);

@@ -4,14 +4,14 @@
     <div class="recommandation">
         <p>为你推荐</p>
         <div class="row">
-            <a class="col-xs-6 col-sm-4 col-md-3 paddinghorizontal" routerLink="/productlist/{{suggestion.id}}" *ngFor="let suggestion of suggestions">
+            <a class="col-xs-6 col-sm-4 col-md-3 paddinghorizontal" routerLink="/productlist/{{suggestion.Id}}" *ngFor="let suggestion of suggestions">
                 <div class="suggest-item">
-                    <img class="img-responsive" src="{{suggestion.pictures[0].path}}" alt>
+                    <img class="img-responsive" src="{{suggestion.Pictures[0].Path}}" alt>
                     <div class="suggest-item-info">
-                        <p class="font-middle gray">{{suggestion.name}}</p>
-                        <p class="font-smaller gray" *ngIf="suggestion.description.length>30">{{suggestion.description.substring(0,30)+'...'}}</p>
-                        <p class="font-smaller gray" *ngIf="suggestion.description.length<=30">{{suggestion.description}}</p>
-                        <p class="font-large bold red">￥{{suggestion.price}}/{{suggestion.unitName}}</p>
+                        <p class="font-middle gray">{{suggestion.Name}}</p>
+                        <p class="font-smaller gray" *ngIf="suggestion.Description.length>30">{{suggestion.Description.substring(0,30)+'...'}}</p>
+                        <p class="font-smaller gray" *ngIf="suggestion.Description.length<=30">{{suggestion.Description}}</p>
+                        <p class="font-large bold red">￥{{suggestion.Price}}/{{suggestion.UnitName}}</p>
                     </div>
                 </div>
             </a>
@@ -25,22 +25,22 @@
     <div class="cart-list">
         <div class="cart-item" *ngFor="let product of products">
             <div class="float-left">
-                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
+                <img class="productimg img-responsive" src="{{product.Pictures[0].Path}}" alt>
             </div>
             <div class="item-info">
-                <p class="font-large">{{product.name}}</p>
-                <p class="red bold">￥{{product.price}}/{{product.unitName}}</p>
+                <p class="font-large">{{product.Name}}</p>
+                <p class="red bold">￥{{product.Price}}/{{product.UnitName}}</p>
                 <p>
                     <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                         <i class="glyphicon glyphicon-minus"></i>
                         </button>
-                    <input class="form-control inline" type="number" disabled [(value)]="product.count" min="0">
+                    <input class="form-control inline" type="number" disabled [(value)]="product.Count" min="0">
                     <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
                         <i class="glyphicon glyphicon-plus"></i>
                         </button>
                 </p>
             </div>
-            <p class="red bold">小计：￥{{product.cost}}</p>
+            <p class="red bold">小计：￥{{product.Cost}}</p>
         </div>
     </div>
 

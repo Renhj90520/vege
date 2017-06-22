@@ -33,13 +33,13 @@ export class ProductComponent implements OnInit {
           if (res.state == 1) {
             this.product = res.body.items[0];
             this.productInCart = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
-            let pp = this.productInCart.find(p => p.id == this.product.id);
+            let pp = this.productInCart.find(p => p.Id == this.product.Id);
             if (pp) {
-              this.product.count = pp.count;
+              this.product.Count = pp.Count;
               let index = this.productInCart.indexOf(pp);
               this.productInCart[index] = this.product;
             } else {
-              this.product.count = this.product.step;
+              this.product.Count = this.product.Step;
             }
           } else {
             alert(res.message);
@@ -86,13 +86,13 @@ export class ProductComponent implements OnInit {
     }
   }
   onIncrease() {
-    this.product.count = MathUtil.add(this.product.count, this.product.step);
+    this.product.Count = MathUtil.add(this.product.Count, this.product.Step);
   }
 
   onDecrease() {
-    this.product.count = MathUtil.subtraction(this.product.count, this.product.step);
-    if (this.product.count < this.product.step) {
-      this.product.count = this.product.step;
+    this.product.Count = MathUtil.subtraction(this.product.Count, this.product.Step);
+    if (this.product.Count < this.product.Step) {
+      this.product.Count = this.product.Step;
     }
   }
   addFav(id) {
@@ -107,7 +107,7 @@ export class ProductComponent implements OnInit {
 
   removeFav() {
     let openid = sessionStorage.getItem('openid');
-    this.favService.deleteFavorite(this.favorite.favId)
+    this.favService.deleteFavorite(this.favorite.FavId)
       .subscribe(res => {
         if (res.state == 1) {
           this.isFavorite = false;

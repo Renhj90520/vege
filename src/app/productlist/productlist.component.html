@@ -3,30 +3,30 @@
 </div>
 <div class="row">
     <div class="col-xs-3" *ngFor="let category of categories">
-        <img class="categories img-responsive" src="{{category.iconPath}}" alt="icon" role="button" (click)="onCategoryClick(category.id)">
-        <p class="catename">{{category.name}}</p>
+        <img class="categories img-responsive" src="{{category.IconPath}}" alt="icon" role="button" (click)="onCategoryClick(category.Id)">
+        <p class="catename">{{category.Name}}</p>
         <!--<img src="http://placehold.it/60x60" class="categories" alt="icon" role="button" (click)="onCategoryClick(category.id)">-->
     </div>
 </div>
 <div class="row margin">
     <div class="col-md-3 col-sm-6 col-xs-12 paddingvertical" *ngFor="let product of products">
         <div class="pic">
-            <a routerLink="/productlist/{{product.id}}">
-                <img class="productimg img-responsive" src="{{product.pictures[0].path}}" alt>
+            <a routerLink="/productlist/{{product.Id}}">
+                <img class="productimg img-responsive" src="{{product.Pictures[0].Path}}" alt>
             </a>
         </div>
         <div class="info">
-            <a routerLink="/productlist/{{product.id}}">
-                <p class="font-middle gray bold">{{product.name}}</p>
+            <a routerLink="/productlist/{{product.Id}}">
+                <p class="font-middle gray bold">{{product.Name}}</p>
                 <!--<p class="font-smaller gray" *ngIf="product.description.length>=40">{{product.description.substring(0,40)+'...'}}</p>
                 <p class="font-smaller gray" *ngIf="product.description.length<40">{{product.description}}</p>-->
-                <p class="font-large red bold">￥{{product.price}}/{{product.unitName}}</p>
+                <p class="font-large red bold">￥{{product.Price}}/{{product.UnitName}}</p>
             </a>
             <p>
                 <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                     <i class="glyphicon glyphicon-minus"></i>
                     </button>
-                <input class="form-control inline" disabled type="number" disabled [(value)]="product.count" min="0">
+                <input class="form-control inline" disabled type="number" disabled [(value)]="product.Count" min="0">
                 <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
                     <i class="glyphicon glyphicon-plus"></i>
                     </button>
