@@ -38,7 +38,7 @@ export class CartComponent implements OnInit {
     //     this.totalCost = this.products.map(p => p.price * p.count).reduce((x, y) => x + y);
     //   }
     // });
-    this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
+    this.products = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
     if (this.products.length <= 0) {
       this.productService.getAllProduct(null, 1, 10, null)
         .subscribe(res => {
@@ -52,8 +52,8 @@ export class CartComponent implements OnInit {
   }
 
   gotoOrder() {
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
-    this.router.navigate(['order'], { replaceUrl: true });
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
+    this.router.navigate(['order/#'], { replaceUrl: true });
   }
 
   onIncrease(product) {
@@ -61,7 +61,7 @@ export class CartComponent implements OnInit {
     product.Cost = MathUtil.mutiple(product.Count, product.Price);
     this.handleDelievery();
     // this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
   }
 
   onDecrease(product) {
@@ -72,7 +72,7 @@ export class CartComponent implements OnInit {
     product.Cost = MathUtil.mutiple(product.Count, product.Price);
     this.handleDelievery();
     // this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
   }
 
   handleDelievery() {

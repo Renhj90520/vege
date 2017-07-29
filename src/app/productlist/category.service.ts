@@ -8,7 +8,7 @@ export class CategoryService {
     constructor(private http: HttpClient) { }
 
     getAllCategories() {
-        return this.http.get(baseUrl + "categories")
+        return this.http.get(baseUrl + 'categories?state=1')
             .map(res => res.json());
     }
 }

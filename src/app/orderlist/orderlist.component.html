@@ -5,8 +5,8 @@
     <div class="order-item" *ngFor="let order of orders">
       <p><span class="left">{{order.State|orderstate}}</span> <span class="red" *ngIf="order.State==2">{{order.CancelReason}}</span></p>
       <p>{{order.CreateTime|mydate}}</p>
-      <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.Id}}" *ngFor="let product of order.Products">
-        <div class="clear">
+      <!-- <a class="col-xs-12 paddingvertical" routerLink="/productlist/{{product.Id}}" *ngFor="let product of order.Products"> -->
+        <div class="clear col-xs-12 paddingvertical" *ngFor="let product of order.Products"> 
           <div class="pic">
             <img class="productimg img-responsive" src="{{product.Pictures[0].Path}}" alt>
           </div>
@@ -16,9 +16,13 @@
             <p class="font-large bold red">￥{{product.Price}}/{{product.UnitName}}</p>
           </div>
         </div>
-      </a>
+      <!-- </a> -->
       <p>共{{order.Products.length}}件商品 合计<span class="red bold">￥{{order.total}} <span class="red bold" *ngIf="order.DeliveryCharge>0">含￥{{order.DeliveryCharge}}运费</span> </span></p>
       <p></p>
+      <p *ngIf="order.IsPaid==1">已支付</p>
+      <p *ngIf="!order.IsPaid || order.IsPaid==0">
+        <button class="btn btn-primary" (click)="onPay(order)">支付</button>
+      </p>
       <hr>
     </div>
   </div>

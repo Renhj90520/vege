@@ -9,7 +9,7 @@ export class LoginService {
     constructor(private http: HttpClient) { }
 
     gettoken(openid) {
-        return this.http.post(authUrl + 'gettoken', { openid: openid || '123456' })//TODO
+        return this.http.post(authUrl + 'gettoken', { openid: openid })
             .map(res => res.json());
     }
 

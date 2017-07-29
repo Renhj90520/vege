@@ -13,17 +13,21 @@ export class OrderlistComponent implements OnInit {
   constructor(private orderService: OrderService) { }
   orders: any[];
   ngOnInit() {
-    this.orderService.getAllOrders()
+    const openid = sessionStorage.getItem('openid');
+    this.orderService.getAllOrders(openid)
       .subscribe(res => {
-        this.orders = res.body.items;
+        this.orders = res.body.items || [];
         this.orders.forEach(order => {
-          let total = order.Products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
-          if (order.DeliveryCharge != 0) {
+          const total = order.Products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
+          if (order.DeliveryCharge !== 0) {
             order.total = MathUtil.add(total, order.DeliveryCharge);
           } else {
             order.total = total;
           }
         });
       });
+  }
+  onPay(order) {
+    this.orderService.processPay(order.total, order.Id);
   }
 }

@@ -16,7 +16,7 @@ import { MyDatePipe } from './shared/mydate.pipe';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/authguard';
 import { HttpClient } from './shared/httpclient';
-import { FavoritelistComponent } from './favoritelist/favoritelist.component';
+// import { FavoritelistComponent } from './favoritelist/favoritelist.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +29,7 @@ import { FavoritelistComponent } from './favoritelist/favoritelist.component';
     ProductComponent,
     OrderStatePipe,
     MyDatePipe,
-    LoginComponent,
-    FavoritelistComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -38,15 +38,15 @@ export class OrderComponent implements OnInit {
     //   .subscribe(res => {
     //     this.products = res.body;
     //   });
-    this.products = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
-    this.products.forEach(p => { p.Cost = MathUtil.mutiple(p.Count, p.Price) });
+    this.products = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
+    this.products.forEach(p => { p.Cost = MathUtil.mutiple(p.Count, p.Price); });
     this.handleDelievery();
   }
   gotoOrders() {
-    let address = this.addresses.filter(a => a.ischecked);
+    const address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
-      let openid = sessionStorage.getItem('openid');
-      let order = {
+      const openid = sessionStorage.getItem('openid');
+      const order = {
         // createtime: this.getNow(),
         DeliveryCharge: 0,
         State: 0, AddressId: address[0].Id, OpenId: openid, products: this.products.map(p => {
@@ -58,9 +58,12 @@ export class OrderComponent implements OnInit {
       }
       this.orderService.addOrder(order, null)
         .subscribe(res => {
-          if (res.state == 1) {
-            this.router.navigate(['orderlist'], { replaceUrl: true });
+          if (res.state === 1) {
+            // this.router.navigate(['orderlist'], { replaceUrl: true });
             sessionStorage.removeItem('cartproducts');
+            const newOrder = res.body;
+
+            this.orderService.processPay(this.totalCost, newOrder.Id);
           } else {
             alert(res.message);
           }
@@ -68,23 +71,14 @@ export class OrderComponent implements OnInit {
           if (err) {
             alert(err);
           }
-        })
+        });
     } else {
       alert('请填选地址');
     }
-
   }
-  // getNow() {
-  //   let now = new Date();
-  //   let month = now.getMonth() < 10 ? '0' + now.getMonth() : now.getMonth();
-  //   let day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
-  //   let hour = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
-  //   let minute = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
-  //   let seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds();
-  //   return `${now.getFullYear()}\-${month}\-${day} ${hour}:${minute}:${seconds}`;
-  // }
+
   onAddAddress() {
-    let openid = sessionStorage.getItem('openid');
+    const openid = sessionStorage.getItem('openid');
     this.newAddr.OpenId = openid;
     this.addressService.addNewAddress(this.newAddr)
       .subscribe(res => {
@@ -100,7 +94,7 @@ export class OrderComponent implements OnInit {
     product.Cost = MathUtil.mutiple(product.Count, product.Price);
 
     this.handleDelievery();
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
   }
 
   onDecrease(product) {
@@ -110,7 +104,7 @@ export class OrderComponent implements OnInit {
     }
     product.Cost = MathUtil.mutiple(product.Count, product.Price);
     this.handleDelievery();
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.products));
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
   }
 
   onAddressChange(address) {
@@ -122,7 +116,7 @@ export class OrderComponent implements OnInit {
     if (confirm('确认删除该地址吗？')) {
       this.addressService.deleteAddress(addr.Id)
         .subscribe(res => {
-          if (res.state == 1) {
+          if (res.state === 1) {
             this.addresses.splice(this.addresses.indexOf(addr), 1);
           } else {
             alert(res.message);
@@ -133,7 +127,7 @@ export class OrderComponent implements OnInit {
     }
   }
   handleDelievery() {
-    let total = this.products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
+    const total = this.products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
     if (total < 20 && total > 0) {
       this.hasDelivery = true;
       this.totalCost = MathUtil.add(total, 5);
@@ -142,4 +136,5 @@ export class OrderComponent implements OnInit {
       this.totalCost = total;
     }
   }
+
 }

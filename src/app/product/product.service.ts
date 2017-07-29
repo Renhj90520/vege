@@ -7,8 +7,8 @@ import { baseUrl } from '../shared/settings';
 export class ProductService {
     constructor(private http: HttpClient) { }
 
-    getAllProduct(id?: number, index?: number, perPage?: number, category?: number) {
-        let url: string = baseUrl + "products/";
+    getAllProduct(id?: number, index?: number, perPage?: number, category?: number, state?: number) {
+        let url: string = baseUrl + 'products/';
         if (id) {
             url += id + '/';
         }
@@ -22,6 +22,9 @@ export class ProductService {
         }
         if (category) {
             condition.push('category=' + category);
+        }
+        if (state) {
+            condition.push('state=' + state);
         }
 
         if (condition.length > 0) {

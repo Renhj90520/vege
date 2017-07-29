@@ -27,16 +27,16 @@ export class ProductComponent implements OnInit {
   // count: number = 1;
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
-      let id = +params['id'];
+      const id = +params['id'];
       this.productService.getAllProduct(id)
         .subscribe(res => {
-          if (res.state == 1) {
+          if (res.state === 1) {
             this.product = res.body.items[0];
-            this.productInCart = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
-            let pp = this.productInCart.find(p => p.Id == this.product.Id);
+            this.productInCart = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
+            const pp = this.productInCart.find(p => p.Id == this.product.Id);
             if (pp) {
               this.product.Count = pp.Count;
-              let index = this.productInCart.indexOf(pp);
+              const index = this.productInCart.indexOf(pp);
               this.productInCart[index] = this.product;
             } else {
               this.product.Count = this.product.Step;
@@ -47,11 +47,11 @@ export class ProductComponent implements OnInit {
         }, err => {
           alert(err);
         });
-      let openid = sessionStorage.getItem('openid');
+      const openid = sessionStorage.getItem('openid');
       this.favService.getFavorite(openid, id)
         .subscribe(res => {
-          if (res.state == 1 && res.body.length > 0) {
-            this.favorite == res.body[0];
+          if (res.state === 1 && res.body.length > 0) {
+            this.favorite = res.body[0];
             this.isFavorite = true;
           } else {
             this.isFavorite = false;
@@ -67,7 +67,7 @@ export class ProductComponent implements OnInit {
   }
 
   onCartClick() {
-    sessionStorage.setItem("cartproducts", JSON.stringify(this.productInCart));
+    sessionStorage.setItem('cartproducts', JSON.stringify(this.productInCart));
     this.router.navigate(['cart'], { replaceUrl: true });
   }
   onAddCart() {
@@ -78,7 +78,7 @@ export class ProductComponent implements OnInit {
     //         this.productInCart.push(product);
     //     }
     //   });
-    let index = this.productInCart.indexOf(this.product)
+    const index = this.productInCart.indexOf(this.product);
     if (index < 0) {
       this.productInCart.push(this.product);
     } else {
@@ -96,22 +96,23 @@ export class ProductComponent implements OnInit {
     }
   }
   addFav(id) {
-    let openid = sessionStorage.getItem('openid');
+    const openid = sessionStorage.getItem('openid');
     this.favService.addFavorite(openid, id)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.isFavorite = true;
+          this.favorite = res.body;
         }
       });
   }
 
   removeFav() {
-    let openid = sessionStorage.getItem('openid');
+    const openid = sessionStorage.getItem('openid');
     this.favService.deleteFavorite(this.favorite.FavId)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.isFavorite = false;
         }
-      })
+      });
   }
 }

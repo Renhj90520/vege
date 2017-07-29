@@ -18,28 +18,28 @@ export class ProductlistComponent implements OnInit {
   categories: any[] = [];
   productsIncart: any[] = [];
   ngOnInit() {
-    this.productsIncart = JSON.parse(sessionStorage.getItem("cartproducts")) || [];
+    this.productsIncart = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
 
     this.categoryService.getAllCategories()
       .subscribe(res => {
         if (res.body.length > 0) {
           this.categories = res.body;
-          this.productService.getAllProduct(null, null, null, this.categories[0].id)
-            .subscribe(res => {
-              if (res.state == 1) {
-                this.products = res.body.items;
+          this.productService.getAllProduct(null, null, null, this.categories[0].Id, 1)
+            .subscribe(resInner => {
+              if (resInner.state === 1) {
+                this.products = resInner.body.items;
                 this.products.forEach(p => {
                   p.Count = 0;
                 });
                 if (this.productsIncart.length > 0) {
                   this.productsIncart.forEach((pc, index) => {
-                    let pp = this.products.find(pi => pi.Id == pc.Id);
+                    const pp = this.products.find(pi => pi.Id === pc.Id);
                     if (pp) {
-                      let pic = this.productsIncart[index];
+                      const pic = this.productsIncart[index];
                       pp.Count = pic.Count;
                       this.productsIncart[index] = pp;
                     }
-                  })
+                  });
                 }
               }
             });
@@ -50,7 +50,7 @@ export class ProductlistComponent implements OnInit {
   onCategoryClick(categoryid) {
     this.productService.getAllProduct(null, null, null, categoryid)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.products = res.body.items;
           this.products.forEach(p => {
             p.Count = 0;
@@ -62,11 +62,10 @@ export class ProductlistComponent implements OnInit {
                   pp.Count = pic.Count;
                   this.productsIncart[index] = pp;
                 }
-              })
+              });
             }
-          })
-        }
-        else {
+          });
+        } else {
           alert(res.message);
         }
       }, err => {
@@ -75,19 +74,22 @@ export class ProductlistComponent implements OnInit {
   }
 
   onDecrease(product) {
-    product.count = MathUtil.subtraction(product.Count, product.Step);
-    if (product.count < 0) {
+    product.Count = MathUtil.subtraction(product.Count, product.Step);
+    if (product.Count < 0) {
       product.Count = 0;
     }
 
-    let index = this.productsIncart.indexOf(product);
-    if (product.Count == 0) {
+    const index = this.productsIncart.indexOf(product);
+    if (product.Count === 0) {
       if (index >= 0) {
         this.productsIncart.splice(index, 1);
       }
     }
-    if (this.productsIncart.length > 0)
+    if (this.productsIncart.length > 0) {
       sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
+    } else {
+      sessionStorage.removeItem('cartproducts')
+    }
   }
 
   onIncrease(product) {
@@ -101,15 +103,16 @@ export class ProductlistComponent implements OnInit {
     // } else {
     //   this.productsIncart.push(product);
     // }
-    if (this.productsIncart.length > 0)
+    if (this.productsIncart.length > 0) {
       sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
+    }
   }
   gotoOrder() {
     if (this.productsIncart.length > 0) {
       sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
-      this.router.navigate(['order'], { replaceUrl: true });
+      this.router.navigate(['order/#'], { replaceUrl: true });
     } else {
-      alert("未选择任何商品！")
+      alert('未选择任何商品！');
     }
   }
 }

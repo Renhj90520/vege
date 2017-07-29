@@ -9,12 +9,13 @@ export class AuthGuard implements CanActivate {
 
     }
     canActivate() {
-        let user = CommonUtil.getToken();
+        const user = CommonUtil.getToken();
         if (user) {
             return true;
         } else {
             this.route.navigate(['/login']);
             return false;
         }
+        // return true;
     }
 }
