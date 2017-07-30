@@ -6,11 +6,12 @@ import 'rxjs/add/operator/map';
 import { Address } from '../models/address';
 import { Md5 } from 'ts-md5/dist/md5';
 import { PatchDoc } from '../models/patchdoc';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class OrderService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     addOrder(order: any, openId?: string) {
         let url = baseUrl + 'orders/';
@@ -26,12 +27,13 @@ export class OrderService {
         if (openId) {
             url += openId;
         }
+        url += '?noshowRemove=true';
         return this.http.get(url)
             .map(res => res.json());
     }
 
     updateOrder(id, order) {
-        this.http.patch(baseUrl + 'orders/' + id, order)
+        return this.http.patch(baseUrl + 'orders/' + id, order)
             .map(res => res.json());
     }
 
@@ -55,7 +57,7 @@ export class OrderService {
             .map(res => res.json());
     }
 
-    processPay(totalCost, orderid) {
+    processPay(totalCost, orderid, orderState) {
         this.prepay(orderid, totalCost * 100)
             .subscribe(res => {
                 if (res.state === 1) {
@@ -64,40 +66,44 @@ export class OrderService {
                     const key = wxconfig.key;
                     const appid = wxconfig.appId;
                     const wxpay: any = {};
-                    wxpay.timeStamp = new Date().getTime();
+                    wxpay.timeStamp = new Date().getTime().toString();
                     wxpay.nonceStr = Math.random().toString(36).substr(2);
                     wxpay.package = `prepay_id=${prepayid}`;
                     wxpay.signType = 'MD5';
                     wxpay.appId = appid;
                     wxpay.paySign = this.buildSign(wxpay, key);
-                    WeixinJSBridge.invoke('getBrandWCPayRequest', wxpay, function (rrr) {
+                    WeixinJSBridge.invoke('getBrandWCPayRequest', wxpay, rrr => {
                         if (rrr.err_msg === 'get_brand_wcpay_request:ok') {
                             const patchDoc = [];
-                            const stateOp: PatchDoc = new PatchDoc();
-                            stateOp.path = 'State';
-                            stateOp.value = '1';
-                            patchDoc.push(stateOp);
+                            if (orderState === 0) {
+                                const stateOp: PatchDoc = new PatchDoc();
+                                stateOp.path = '/State';
+                                stateOp.value = '1';
+                                patchDoc.push(stateOp);
+                            }
                             const notifyState: PatchDoc = new PatchDoc();
-                            notifyState.path = 'NotifyState';
+                            notifyState.path = '/NotifyState';
                             notifyState.value = '2';
                             patchDoc.push(notifyState);
                             const ispaid: PatchDoc = new PatchDoc();
-                            ispaid.path = 'IsPaid';
+                            ispaid.path = '/IsPaid';
                             ispaid.value = '1';
                             patchDoc.push(ispaid);
                             // const wxorderid: PatchDoc = new PatchDoc();
                             // wxorderid.path = 'WXOrderId';
                             // patchDoc.push(wxorderid);
-                            this.orderService.updateOrder(orderid, patchDoc)
+                            this.updateOrder(orderid, patchDoc)
                                 .subscribe(r => {
                                     if (r.state === 1) {
-                                        this.router.navigate(['orderlist/#'], { replaceUrl: true });
+                                        this.router.navigate(['/orderlist/#'], { replaceUrl: true });
                                     } else {
                                         alert(r.message);
                                     }
                                 }, e => { alert(e); });
                         } else if (rrr.err_msg === 'get_brand_wcpay_request:fail') {
                             alert(rrr.err_desc);
+                        } else if (rrr.err_msg === 'get_brand_wcpay_request:cancel') {
+                            this.router.navigate(['/orderlist/#'], { replaceUrl: true });
                         }
                     });
                 } else {

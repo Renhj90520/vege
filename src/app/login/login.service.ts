@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '../shared/httpclient';
 import { baseUrl, authUrl } from '../shared/settings';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LoginService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: Http) { }
 
     gettoken(openid) {
         return this.http.post(authUrl + 'gettoken', { openid: openid })
@@ -14,6 +14,6 @@ export class LoginService {
     }
 
     redirectAuth() {
-        return this.http.get(authUrl).map(res => res.json());
+        return this.http.request(authUrl);
     }
 }

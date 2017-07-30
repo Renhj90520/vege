@@ -48,7 +48,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onCategoryClick(categoryid) {
-    this.productService.getAllProduct(null, null, null, categoryid)
+    this.productService.getAllProduct(null, null, null, categoryid, 1)
       .subscribe(res => {
         if (res.state === 1) {
           this.products = res.body.items;
@@ -56,7 +56,7 @@ export class ProductlistComponent implements OnInit {
             p.Count = 0;
             if (this.productsIncart.length > 0) {
               this.productsIncart.forEach((pc, index) => {
-                let pp = this.products.find(pi => pi.Id == pc.Id);
+                let pp = this.products.find(pi => pi.Id === pc.Id);
                 if (pp) {
                   let pic = this.productsIncart[index];
                   pp.Count = pic.Count;

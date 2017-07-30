@@ -11,25 +11,22 @@ export class AddressService {
     constructor(private http: HttpClient) { }
 
     getAllAddress(openId?: string) {
-        let url = baseUrl + "addresses/";
+        let url = baseUrl + 'addresses/';
         if (openId) {
-            url + openId;
+            url += openId;
         }
         return this.http.get(url)
             .map(res => res.json());
     }
 
-    addNewAddress(address: Address, openId?: string) {
-        let url = baseUrl + "addresses/";
-        if (openId) {
-            url + openId;
-        }
+    addNewAddress(address: Address) {
+        let url = baseUrl + 'addresses/';
         return this.http.post(url, address)
             .map(res => res.json());
     }
 
     deleteAddress(id: number) {
-        let url = baseUrl + 'addresses/' + id;
+        const url = baseUrl + 'addresses/' + id;
         return this.http.delete(url)
             .map(res => res.json());
     }

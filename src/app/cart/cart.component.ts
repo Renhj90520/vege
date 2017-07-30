@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
     // });
     this.products = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
     if (this.products.length <= 0) {
-      this.productService.getAllProduct(null, 1, 10, null)
+      this.productService.getAllProduct(null, 1, 10, null, 1)
         .subscribe(res => {
           this.suggestions = res.body.items || [];
         })

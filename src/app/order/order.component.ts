@@ -63,7 +63,7 @@ export class OrderComponent implements OnInit {
             sessionStorage.removeItem('cartproducts');
             const newOrder = res.body;
 
-            this.orderService.processPay(this.totalCost, newOrder.Id);
+            this.orderService.processPay(this.totalCost, newOrder.Id, newOrder.State);
           } else {
             alert(res.message);
           }
@@ -82,11 +82,15 @@ export class OrderComponent implements OnInit {
     this.newAddr.OpenId = openid;
     this.addressService.addNewAddress(this.newAddr)
       .subscribe(res => {
-        if (res.state == 1 && res.body) {
+        if (res.state === 1 && res.body) {
           this.addresses.forEach(a => a.ischecked = false);
           res.body.ischecked = true;
           this.addresses.push(res.body);
+        } else {
+          alert(res.message);
         }
+      }, err => {
+        alert(err);
       });
   }
   onIncrease(product) {

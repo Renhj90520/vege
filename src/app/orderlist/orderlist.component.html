@@ -22,6 +22,7 @@
       <p *ngIf="order.IsPaid==1">已支付</p>
       <p *ngIf="!order.IsPaid || order.IsPaid==0">
         <button class="btn btn-primary" (click)="onPay(order)">支付</button>
+        <button class="btn btn-primary" (click)="onCancel(order)">取消</button>
       </p>
       <hr>
     </div>
