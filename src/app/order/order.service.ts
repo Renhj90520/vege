@@ -1,3 +1,4 @@
+///<reference path="../wx/wechat.d.ts" />
 import { Injectable } from '@angular/core';
 import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
@@ -95,15 +96,41 @@ export class OrderService {
                             this.updateOrder(orderid, patchDoc)
                                 .subscribe(r => {
                                     if (r.state === 1) {
-                                        this.router.navigate(['/orderlist/#'], { replaceUrl: true });
+                                        this.router.navigate(['orderlist/#'], { replaceUrl: true });
                                     } else {
                                         alert(r.message);
                                     }
                                 }, e => { alert(e); });
+                            delete wxconfig.prepayid;
+                            delete wxconfig.key;
+                            wx.config(wxconfig);
+                            wx.ready(() => {
+                                wx.getLocation({
+                                    type: 'wgs84',
+                                    success: location => {
+                                        const latitude = location.latitude; // 纬度，浮点数，范围为90 ~ -90
+                                        const longitude = location.longitude; // 经度，浮点数，范围为180 ~ -180。
+                                        const geo = [];
+                                        const lanDoc = new PatchDoc();
+                                        lanDoc.path = '/Latitude';
+                                        lanDoc.value = latitude;
+                                        geo.push(lanDoc);
+                                        const longDoc = new PatchDoc();
+                                        longDoc.path = '/Longitude';
+                                        longDoc.value = longitude;
+                                        geo.push(longDoc);
+                                        this.updateOrder(orderid, geo)
+                                            .subscribe();
+                                    }
+                                });
+                            });
+                            wx.error(function (err) {
+                                alert(err);
+                            });
                         } else if (rrr.err_msg === 'get_brand_wcpay_request:fail') {
                             alert(rrr.err_desc);
                         } else if (rrr.err_msg === 'get_brand_wcpay_request:cancel') {
-                            this.router.navigate(['/orderlist/#'], { replaceUrl: true });
+                            this.router.navigate(['orderlist/#'], { replaceUrl: true });
                         }
                     });
                 } else {
