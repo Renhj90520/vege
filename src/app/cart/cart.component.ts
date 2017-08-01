@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
 import { ProductService } from '../product/product.service';
 import { MathUtil } from '../shared/util';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,8 @@ export class CartComponent implements OnInit {
 
   constructor(private router: Router,
     private cartService: CartService,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    @Inject(DOCUMENT) private document: any) { }
 
   message: string;
   state: number;
@@ -43,12 +45,13 @@ export class CartComponent implements OnInit {
       this.productService.getAllProduct(null, 1, 10, null, 1)
         .subscribe(res => {
           this.suggestions = res.body.items || [];
-        })
+        });
     } else {
       this.products.forEach(p => p.Cost = MathUtil.mutiple(p.Count, p.Price));
       this.handleDelievery();
       // this.totalCost = this.products.map(p => MathUtil.mutiple(p.count, p.price)).reduce((x, y) => MathUtil.add(x, y));
     }
+    this.document.body.scrollTop = 0;
   }
 
   gotoOrder() {
