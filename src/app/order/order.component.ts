@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressService } from './address.service';
 import { OrderService } from './order.service';
@@ -6,6 +6,7 @@ import { CartService } from '../cart/cart.service';
 import { Product } from '../models/product';
 import { Address } from '../models/address';
 import { MathUtil } from '../shared/util';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-order',
@@ -18,14 +19,16 @@ export class OrderComponent implements OnInit {
   constructor(private router: Router,
     private orderService: OrderService,
     private addressService: AddressService,
-    private cartService: CartService) { }
+    private cartService: CartService,
+    @Inject(DOCUMENT) private document: any) { }
   addresses: Address[] = [];
   products: any[];
   newAddr: Address = new Address();
   totalCost: number = 0;
   hasDelivery: boolean = false;
   ngOnInit() {
-    let openid = sessionStorage.getItem('openid');
+    this.document.body.scrollTop = 0;
+    const openid = sessionStorage.getItem('openid');
     this.addressService.getAllAddress(openid)
       .subscribe(res => {
         this.addresses = res.body;
