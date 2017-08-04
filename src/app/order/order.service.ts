@@ -73,6 +73,7 @@ export class OrderService {
                     wxpay.signType = 'MD5';
                     wxpay.appId = appid;
                     wxpay.paySign = this.buildSign(wxpay, key);
+
                     WeixinJSBridge.invoke('getBrandWCPayRequest', wxpay, rrr => {
                         if (rrr.err_msg === 'get_brand_wcpay_request:ok') {
                             const patchDoc = [];
@@ -96,49 +97,70 @@ export class OrderService {
                             this.updateOrder(orderid, patchDoc)
                                 .subscribe(r => {
                                     if (r.state === 1) {
-                                        this.router.navigate(['orderlist/#'], { replaceUrl: true });
+                                        delete wxconfig.prepayid;
+                                        delete wxconfig.key;
+                                        wx.config(wxconfig);
+                                        wx.ready(() => {
+                                            wx.getLocation({
+                                                type: 'wgs84',
+                                                success: location => {
+                                                    const latitude = location.latitude; // 纬度，浮点数，范围为90 ~ -90
+                                                    const longitude = location.longitude; // 经度，浮点数，范围为180 ~ -180。
+                                                    const geo = [];
+                                                    const lanDoc = new PatchDoc();
+                                                    lanDoc.path = '/Latitude';
+                                                    lanDoc.value = latitude;
+                                                    geo.push(lanDoc);
+                                                    const longDoc = new PatchDoc();
+                                                    longDoc.path = '/Longitude';
+                                                    longDoc.value = longitude;
+                                                    geo.push(longDoc);
+                                                    this.updateOrder(orderid, geo)
+                                                        .subscribe(upres => {
+                                                            this.navigateToList();
+                                                        }, err => {
+                                                            this.navigateToList();
+                                                        });
+                                                },
+                                                cancel: geocancel => {
+                                                    this.navigateToList();
+                                                }
+                                            });
+                                        });
+                                        wx.error(function (err) {
+                                            alert(err);
+                                            this.navigateToList();
+                                        });
                                     } else {
                                         alert(r.message);
+                                        this.navigateToList();
                                     }
-                                }, e => { alert(e); });
-                            delete wxconfig.prepayid;
-                            delete wxconfig.key;
-                            wx.config(wxconfig);
-                            wx.ready(() => {
-                                wx.getLocation({
-                                    type: 'wgs84',
-                                    success: location => {
-                                        const latitude = location.latitude; // 纬度，浮点数，范围为90 ~ -90
-                                        const longitude = location.longitude; // 经度，浮点数，范围为180 ~ -180。
-                                        const geo = [];
-                                        const lanDoc = new PatchDoc();
-                                        lanDoc.path = '/Latitude';
-                                        lanDoc.value = latitude;
-                                        geo.push(lanDoc);
-                                        const longDoc = new PatchDoc();
-                                        longDoc.path = '/Longitude';
-                                        longDoc.value = longitude;
-                                        geo.push(longDoc);
-                                        this.updateOrder(orderid, geo)
-                                            .subscribe();
-                                    }
+                                }, e => {
+                                    alert(e);
+                                    this.navigateToList();
                                 });
-                            });
-                            wx.error(function (err) {
-                                alert(err);
-                            });
                         } else if (rrr.err_msg === 'get_brand_wcpay_request:fail') {
                             alert(rrr.err_desc);
+                            this.navigateToList();
                         } else if (rrr.err_msg === 'get_brand_wcpay_request:cancel') {
-                            this.router.navigate(['orderlist/#'], { replaceUrl: true });
+                            this.navigateToList();
+                            // this.router.navigate(['orderlist/#'], { replaceUrl: true });
                         }
                     });
                 } else {
                     alert(res.message);
+                    this.navigateToList();
                 }
             }, err => {
                 alert(err);
+                this.navigateToList();
             });
+    }
+
+    navigateToList() {
+        sessionStorage.removeItem('cartproducts');
+        wx.closeWindow();
+        this.router.navigate(['orderlist/#'], { replaceUrl: true });
     }
 
     buildOutId(order) {

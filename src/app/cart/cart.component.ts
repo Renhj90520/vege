@@ -69,11 +69,16 @@ export class CartComponent implements OnInit {
 
   onDecrease(product) {
     product.Count = MathUtil.subtraction(product.Count, product.Step);
-    if (product.Count < 0) {
+    if (parseFloat(product.Count) <= 0) {
       product.Count = 0;
+      const index = this.products.findIndex(p => { return p.Id === product.Id; });
+      if (index >= 0) {
+        this.products.splice(index, 1);
+      }
+    } else {
+      product.Cost = MathUtil.mutiple(product.Count, product.Price);
+      this.handleDelievery();
     }
-    product.Cost = MathUtil.mutiple(product.Count, product.Price);
-    this.handleDelievery();
     // this.totalCost = this.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
     sessionStorage.setItem('cartproducts', JSON.stringify(this.products));
   }

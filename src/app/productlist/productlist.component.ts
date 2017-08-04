@@ -75,16 +75,14 @@ export class ProductlistComponent implements OnInit {
 
   onDecrease(product) {
     product.Count = MathUtil.subtraction(product.Count, product.Step);
-    if (product.Count < 0) {
+    if (parseFloat(product.Count) <= 0) {
       product.Count = 0;
-    }
-
-    const index = this.productsIncart.indexOf(product);
-    if (product.Count === 0) {
+      const index = this.productsIncart.findIndex(p => { return p.Id === product.Id; }); // this.productsIncart.indexOf(product);
       if (index >= 0) {
         this.productsIncart.splice(index, 1);
       }
     }
+
     if (this.productsIncart.length > 0) {
       sessionStorage.setItem('cartproducts', JSON.stringify(this.productsIncart));
     } else {

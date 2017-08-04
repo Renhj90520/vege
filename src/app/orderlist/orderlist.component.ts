@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { OrderService } from '../order/order.service';
 import { MathUtil } from '../shared/util';
-import { PatchDoc } from "app/models/patchdoc";
+import { PatchDoc } from 'app/models/patchdoc';
 
 @Component({
   selector: 'app-orderlist',
@@ -11,7 +11,7 @@ import { PatchDoc } from "app/models/patchdoc";
 })
 export class OrderlistComponent implements OnInit {
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private ref: ChangeDetectorRef) { }
   orders: any[];
   ngOnInit() {
     let openid = sessionStorage.getItem('openid');
@@ -30,6 +30,7 @@ export class OrderlistComponent implements OnInit {
               order.total = total;
             }
           });
+          this.ref.detectChanges();
         } else {
           alert(res.message);
         }
