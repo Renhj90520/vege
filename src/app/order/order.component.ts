@@ -26,6 +26,7 @@ export class OrderComponent implements OnInit {
   newAddr: Address = new Address();
   totalCost: number = 0;
   hasDelivery: boolean = false;
+  issubmitting: boolean = false;
   ngOnInit() {
     this.document.body.scrollTop = 0;
     const openid = sessionStorage.getItem('openid');
@@ -48,33 +49,37 @@ export class OrderComponent implements OnInit {
   gotoOrders() {
     const address = this.addresses.filter(a => a.ischecked);
     if (address && address.length > 0) {
-      const openid = sessionStorage.getItem('openid');
-      const order = {
-        // createtime: this.getNow(),
-        DeliveryCharge: 0,
-        State: 0, AddressId: address[0].Id, OpenId: openid, products: this.products.map(p => {
-          return { ProductId: p.Id, Count: p.Count, Price: p.Price }
-        })
-      };
-      if (this.hasDelivery) {
-        order.DeliveryCharge = 5;
-      }
-      this.orderService.addOrder(order, null)
-        .subscribe(res => {
-          if (res.state === 1) {
-            // this.router.navigate(['orderlist'], { replaceUrl: true });
-            sessionStorage.removeItem('cartproducts');
-            const newOrder = res.body;
+      if (!this.issubmitting) {
+        const openid = sessionStorage.getItem('openid');
+        const order = {
+          // createtime: this.getNow(),
+          DeliveryCharge: 0,
+          State: 0, AddressId: address[0].Id, OpenId: openid, products: this.products.map(p => {
+            return { ProductId: p.Id, Count: p.Count, Price: p.Price }
+          })
+        };
+        if (this.hasDelivery) {
+          order.DeliveryCharge = 5;
+        }
+        this.issubmitting = true;
+        this.orderService.addOrder(order, null)
+          .subscribe(res => {
+            if (res.state === 1) {
+              // this.router.navigate(['orderlist'], { replaceUrl: true });
+              sessionStorage.removeItem('cartproducts');
+              const newOrder = res.body;
 
-            this.orderService.processPay(this.totalCost, newOrder.Id, newOrder.State);
-          } else {
-            alert(res.message);
-          }
-        }, err => {
-          if (err) {
-            alert(err);
-          }
-        });
+              this.orderService.processPay(this.totalCost, newOrder.Id, newOrder.State);
+            } else {
+              alert(res.message);
+            }
+          }, err => {
+            if (err) {
+              alert(err);
+            }
+
+          });
+      }
     } else {
       alert('请填选地址');
     }

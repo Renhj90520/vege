@@ -159,7 +159,6 @@ export class OrderService {
 
     navigateToList() {
         sessionStorage.removeItem('cartproducts');
-        wx.closeWindow();
         this.router.navigate(['orderlist/#'], { replaceUrl: true });
     }
 
