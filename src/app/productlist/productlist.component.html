@@ -26,7 +26,7 @@
                 <button class="btn btn-primary btn-xs" (click)="onDecrease(product)">
                     <i class="glyphicon glyphicon-minus"></i>
                     </button>
-                <input class="form-control inline" disabled type="number" disabled [(value)]="product.Count" min="0">
+                <input class="form-control inline" type="number" disabled [(value)]="product.Count" min="0">
                 <button class="btn btn-primary btn-xs" (click)="onIncrease(product)">
                     <i class="glyphicon glyphicon-plus"></i>
                     </button>
@@ -40,4 +40,8 @@
 </div>
 <div class="btn-pay" role="button" *ngIf="productsIncart.length>0" (click)="gotoOrder()">
     结算 <span class="badge">{{productsIncart.length}}</span>
+</div>
+<div class="btn-top" role="button" (click)="gotoTop()">
+    <p><i class="glyphicon glyphicon-chevron-up"></i></p>
+    <p>顶部</p>
 </div>

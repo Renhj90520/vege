@@ -8,6 +8,7 @@ import { Address } from '../models/address';
 import { Md5 } from 'ts-md5/dist/md5';
 import { PatchDoc } from '../models/patchdoc';
 import { Router } from '@angular/router';
+import { MathUtil } from '../shared/util';
 
 @Injectable()
 export class OrderService {
@@ -59,7 +60,7 @@ export class OrderService {
     }
 
     processPay(totalCost, orderid, orderState) {
-        this.prepay(orderid, totalCost * 100)
+        this.prepay(orderid, MathUtil.mutiple(totalCost, 100))
             .subscribe(res => {
                 if (res.state === 1) {
                     const wxconfig = res.body;
@@ -97,40 +98,41 @@ export class OrderService {
                             this.updateOrder(orderid, patchDoc)
                                 .subscribe(r => {
                                     if (r.state === 1) {
-                                        delete wxconfig.prepayid;
-                                        delete wxconfig.key;
-                                        wx.config(wxconfig);
-                                        wx.ready(() => {
-                                            wx.getLocation({
-                                                type: 'wgs84',
-                                                success: location => {
-                                                    const latitude = location.latitude; // 纬度，浮点数，范围为90 ~ -90
-                                                    const longitude = location.longitude; // 经度，浮点数，范围为180 ~ -180。
-                                                    const geo = [];
-                                                    const lanDoc = new PatchDoc();
-                                                    lanDoc.path = '/Latitude';
-                                                    lanDoc.value = latitude;
-                                                    geo.push(lanDoc);
-                                                    const longDoc = new PatchDoc();
-                                                    longDoc.path = '/Longitude';
-                                                    longDoc.value = longitude;
-                                                    geo.push(longDoc);
-                                                    this.updateOrder(orderid, geo)
-                                                        .subscribe(upres => {
-                                                            this.navigateToList();
-                                                        }, err => {
-                                                            this.navigateToList();
-                                                        });
-                                                },
-                                                cancel: geocancel => {
-                                                    this.navigateToList();
-                                                }
-                                            });
-                                        });
-                                        wx.error(function (err) {
-                                            alert(err);
-                                            this.navigateToList();
-                                        });
+                                        // delete wxconfig.prepayid;
+                                        // delete wxconfig.key;
+                                        // wx.config(wxconfig);
+                                        // wx.ready(() => {
+                                        //     wx.getLocation({
+                                        //         type: 'wgs84',
+                                        //         success: location => {
+                                        //             const latitude = location.latitude; // 纬度，浮点数，范围为90 ~ -90
+                                        //             const longitude = location.longitude; // 经度，浮点数，范围为180 ~ -180。
+                                        //             const geo = [];
+                                        //             const lanDoc = new PatchDoc();
+                                        //             lanDoc.path = '/Latitude';
+                                        //             lanDoc.value = latitude;
+                                        //             geo.push(lanDoc);
+                                        //             const longDoc = new PatchDoc();
+                                        //             longDoc.path = '/Longitude';
+                                        //             longDoc.value = longitude;
+                                        //             geo.push(longDoc);
+                                        //             this.updateOrder(orderid, geo)
+                                        //                 .subscribe(upres => {
+                                        //                     this.navigateToList();
+                                        //                 }, err => {
+                                        //                     this.navigateToList();
+                                        //                 });
+                                        //         },
+                                        //         cancel: geocancel => {
+                                        //             this.navigateToList();
+                                        //         }
+                                        //     });
+                                        // });
+                                        // wx.error(function (err) {
+                                        //     alert(err);
+                                        //     this.navigateToList();
+                                        // });
+                                        this.navigateToList();
                                     } else {
                                         alert(r.message);
                                         this.navigateToList();

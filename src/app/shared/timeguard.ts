@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { CommonUtil } from './util';
 import { authUrl } from './settings';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class TimeGuard implements CanActivate {
 
     constructor(private route: Router, private http: Http) {
 
     }
     canActivate() {
         return this.checkOpeningTime();
-        // return true;
     }
     checkOpeningTime() {
         return this.http.get(authUrl + 'checktime')
@@ -21,14 +19,8 @@ export class AuthGuard implements CanActivate {
                 const result = res.json();
                 if (result.state === 1) {
 
-                    if (result.body == true) {
-                        const user = CommonUtil.getToken();
-                        if (user) {
-                            return true;
-                        } else {
-                            this.route.navigate(['login']);
-                            return false;
-                        }
+                    if (result.body === true) {
+                        return true;
                     } else {
                         alert('非营业时间！');
                         this.route.navigate(['closed']);

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressService } from './address.service';
 import { OrderService } from './order.service';
@@ -20,6 +20,7 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private addressService: AddressService,
     private cartService: CartService,
+    private ref: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: any) { }
   addresses: Address[] = [];
   products: any[];
@@ -94,6 +95,7 @@ export class OrderComponent implements OnInit {
           this.addresses.forEach(a => a.ischecked = false);
           res.body.ischecked = true;
           this.addresses.push(res.body);
+          this.ref.detectChanges();
         } else {
           alert(res.message);
         }

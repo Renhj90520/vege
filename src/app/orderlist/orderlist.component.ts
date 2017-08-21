@@ -62,6 +62,7 @@ export class OrderlistComponent implements OnInit {
           if (res.state === 1) {
             const index = this.orders.indexOf(order);
             this.orders.splice(index, 1);
+            this.ref.detectChanges();
           } else {
             alert(res.message);
           }

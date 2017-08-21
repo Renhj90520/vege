@@ -13,7 +13,7 @@ export class ProductService {
             url += id + '/';
         }
 
-        var condition: string[] = [];
+        const condition: string[] = [];
         if (index) {
             condition.push('index=' + index);
         }
@@ -35,4 +35,8 @@ export class ProductService {
             .map(res => res.json());
     }
 
+    getProduct(id) {
+        return this.http.get(baseUrl + 'products/' + id)
+            .map(res => res.json());
+    }
 }

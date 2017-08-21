@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ProductService } from '../product/product.service';
 import { CategoryService } from './category.service';
 import { Router } from '@angular/router';
 import { MathUtil } from '../shared/util';
 import { AuthGuard } from '../shared/authguard';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-productlist',
@@ -12,7 +13,10 @@ import { AuthGuard } from '../shared/authguard';
   providers: [ProductService, CategoryService, AuthGuard]
 })
 export class ProductlistComponent implements OnInit {
-  constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) { }
+  constructor(private router: Router,
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    @Inject(DOCUMENT) private document: any) { }
 
   products: any[] = [];
   categories: any[] = [];
@@ -54,17 +58,17 @@ export class ProductlistComponent implements OnInit {
           this.products = res.body.items;
           this.products.forEach(p => {
             p.Count = 0;
-            if (this.productsIncart.length > 0) {
-              this.productsIncart.forEach((pc, index) => {
-                let pp = this.products.find(pi => pi.Id === pc.Id);
-                if (pp) {
-                  let pic = this.productsIncart[index];
-                  pp.Count = pic.Count;
-                  this.productsIncart[index] = pp;
-                }
-              });
-            }
           });
+          if (this.productsIncart.length > 0) {
+            this.productsIncart.forEach((pc, index) => {
+              const pp = this.products.find(pi => pi.Id === pc.Id);
+              if (pp) {
+                const pic = this.productsIncart[index];
+                pp.Count = pic.Count;
+                this.productsIncart[index] = pp;
+              }
+            });
+          }
         } else {
           alert(res.message);
         }
@@ -112,5 +116,9 @@ export class ProductlistComponent implements OnInit {
     } else {
       alert('未选择任何商品！');
     }
+  }
+
+  gotoTop() {
+    this.document.body.scrollTop = 0;
   }
 }

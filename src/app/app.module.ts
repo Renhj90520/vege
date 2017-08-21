@@ -15,7 +15,9 @@ import { OrderStatePipe } from './shared/orderstate.pipe';
 import { MyDatePipe } from './shared/mydate.pipe';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/authguard';
+import { TimeGuard } from './shared/timeguard';
 import { HttpClient } from './shared/httpclient';
+import { OpeningTimeComponent } from './opening-time/opening-time.component';
 // import { FavoritelistComponent } from './favoritelist/favoritelist.component';
 
 @NgModule({
@@ -29,7 +31,8 @@ import { HttpClient } from './shared/httpclient';
     ProductComponent,
     OrderStatePipe,
     MyDatePipe,
-    LoginComponent
+    LoginComponent,
+    OpeningTimeComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,7 @@ import { HttpClient } from './shared/httpclient';
     HttpModule,
     routing
   ],
-  providers: [AuthGuard, HttpClient],
+  providers: [AuthGuard, HttpClient, TimeGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

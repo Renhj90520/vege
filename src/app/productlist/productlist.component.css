@@ -34,6 +34,21 @@
     right: 20px;
     box-shadow: 1px 1px 5px #951a08;
 }
+.btn-top{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(125, 212, 60); 
+    border: 1px solid white;
+    border-radius: 50px;
+    text-align: center;
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    box-shadow: 1px 1px 5px rgb(100, 160, 50); 
+    color: white;
+    padding-top: 5px;
+    line-height: 0.5;
+}
 .btn-pay .badge{
     background-color: #ff8003;
 }

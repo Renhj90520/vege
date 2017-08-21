@@ -28,10 +28,10 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       const id = +params['id'];
-      this.productService.getAllProduct(id)
+      this.productService.getProduct(id)
         .subscribe(res => {
           if (res.state === 1) {
-            this.product = res.body.items[0];
+            this.product = res.body;
             this.productInCart = JSON.parse(sessionStorage.getItem('cartproducts')) || [];
             const pp = this.productInCart.find(p => p.Id == this.product.Id);
             if (pp) {
@@ -78,9 +78,13 @@ export class ProductComponent implements OnInit {
     //         this.productInCart.push(product);
     //     }
     //   });
-    const index = this.productInCart.indexOf(this.product);
+    const pp = this.productInCart.find(p => p.Id == this.product.Id);
+
+    const index = this.productInCart.indexOf(pp);
     if (index < 0) {
-      this.productInCart.push(this.product);
+      const p = this.product;
+      delete p.description;
+      this.productInCart.push(p);
     } else {
       alert('该商品已加入购物车！');
     }
